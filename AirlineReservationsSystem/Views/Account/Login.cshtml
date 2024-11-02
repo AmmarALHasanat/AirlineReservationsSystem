@@ -1,0 +1,30 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"]= "Login";
+}
+
+<div class="container">
+    <div class="col-md-3 card p-2 w-75">
+        <h2 class="card-header text-center text-info">
+            Login Form
+        </h2>
+        <form asp-action="Login" method="post" class="card-body  fs-3">
+            <div asp-validation-summary="ModelOnly"> </div>
+            <div class="card-group mb-2 row-cols-3">
+                <label asp-for="Email" class="card-text"></label>
+                <input asp-for="Email"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="card-group mb-2 row-cols-3">
+                <label asp-for="Password" class="card-text"></label>
+                <input asp-for="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="card-group card-text">
+                <label asp-for="RememberMe" ></label>
+                <input asp-for="RememberMe" id="RememberMe"  class=""/>
+            </div>
+        </form>
+    </div>
+</div>

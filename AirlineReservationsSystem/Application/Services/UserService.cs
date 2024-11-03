@@ -17,11 +17,12 @@ namespace AirlineReservationsSystem.Application.Services
 
         public async Task<SignInResult> LoginAsync(string email, string password,bool rememberMe)
         {
-            return await signInManager.PasswordSignInAsync(
+            var r=  await signInManager.PasswordSignInAsync(
                 email,
                 password,
                 rememberMe,
                 lockoutOnFailure: false);
+            return r;
         }
 
         public async Task<IdentityResult> RegisterAsync(User user, string password)

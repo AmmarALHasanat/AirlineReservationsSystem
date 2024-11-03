@@ -4,27 +4,42 @@
     ViewData["Title"]= "Login";
 }
 
-<div class="container">
-    <div class="col-md-3 card p-2 w-75">
-        <h2 class="card-header text-center text-info">
-            Login Form
-        </h2>
-        <form asp-action="Login" method="post" class="card-body  fs-3">
-            <div asp-validation-summary="ModelOnly"> </div>
-            <div class="card-group mb-2 row-cols-3">
-                <label asp-for="Email" class="card-text"></label>
-                <input asp-for="Email"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
+<div class="col-md-3 card p-2 w-50 mx-sm-auto">
+    <h2 class="card-header text-center text-info">
+        Login Form
+    </h2>
+    <form asp-action="Login" method="post" class="card-body fs-5">
+        <div class="card-group mb-2">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="card-group mb-2">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="card-group mb-2">
+            <label class="mb-2 form-check-label">
+                <input asp-for="RememberMe" class="form-check-input" />
+                @Html.DisplayNameFor(u => u.RememberMe)
+            </label>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <a asp-action="Register">
+                    Don't have account?
+                </a>
             </div>
-            <div class="card-group mb-2 row-cols-3">
-                <label asp-for="Password" class="card-text"></label>
-                <input asp-for="Password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="col-4 d-flex justify-content-end">
+                <input type="submit" value="Login" class="btn-primary btn-lg" />
             </div>
-            <div class="card-group card-text">
-                <label asp-for="RememberMe" ></label>
-                <input asp-for="RememberMe" id="RememberMe"  class=""/>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+    </form>
 </div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

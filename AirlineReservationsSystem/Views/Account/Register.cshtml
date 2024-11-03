@@ -3,3 +3,54 @@
 @{
     ViewData["Title"] = "Register";
 }
+
+
+<div class="col-md-3 card p-2 w-50 mx-sm-auto">
+    <h2 class="card-header text-center text-info">
+        Register Form
+    </h2>
+    <form asp-action="Register" method="post" class="card-body fs-5">
+        <div class="card-group mb-2">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="card-group mb-2">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="card-group mb-2">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="card-group mb-2">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="card-group mb-2">
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <a asp-action="Login">
+                    Do you have account?
+                </a>
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+                <input type="submit" value="Register" class="btn-primary btn-lg" />
+            </div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

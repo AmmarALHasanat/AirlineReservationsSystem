@@ -5,14 +5,14 @@ namespace AirlineReservationsSystem.Domain.Entities
 {
     public class User:IdentityUser
     {
-        [StringLength(100)]
-        [MaxLength(100)]
         [Required]
+        [MaxLength(100)]
+        [StringLength(100)]
         public string? FullName { get; set; }
 
-        [StringLength(100)]
-        [MaxLength(100)]
         [Required]
+        [MaxLength(14)]
+        [StringLength(14)]
         public override string? PhoneNumber { get; set; }
     }
 }

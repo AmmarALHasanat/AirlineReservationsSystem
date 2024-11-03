@@ -19,6 +19,7 @@ namespace AirlineReservationsSystem.Models
         [DataType(DataType.Password)]
         public string? Password { get; set; }
 
+        [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passwords Do't match.")]
         public string? ConfirmPassword { get; set; }
 

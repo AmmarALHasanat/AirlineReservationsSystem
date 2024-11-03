@@ -1,8 +1,9 @@
+using AirlineReservationsSystem.Application.Interfaces;
+using AirlineReservationsSystem.Application.Services;
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,9 @@ builder.Services.AddIdentity<User, IdentityRole>
         options.Password.RequireNonAlphanumeric =false;
     }).AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+
+// Add Scoped
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

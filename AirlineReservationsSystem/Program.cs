@@ -2,6 +2,8 @@ using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Application.Services;
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,11 +24,27 @@ builder.Services.AddIdentity<User, IdentityRole>
         options.Password.RequireLowercase = false;
         options.Password.RequiredLength = 8;
         options.Password.RequireNonAlphanumeric =false;
+        // options.SignIn.RequireConfirmedAccount = true
     }).AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+
+
+builder.Services.AddAuthentication(
+    //options =>{
+    //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    //}
+    ).AddGoogle(googleOptions =>{
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+        googleOptions.CallbackPath = "/account/signin-google";
+    });
+
 // Add Scoped
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
 var app = builder.Build();
 
@@ -43,6 +61,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

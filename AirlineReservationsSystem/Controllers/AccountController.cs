@@ -1,7 +1,18 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+
+using Microsoft.AspNetCore.Authentication;
+
+//using Microsoft.AspNetCore.Authentication;
+//using Microsoft.AspNetCore.Authentication.Cookies;
+//using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using AirlineReservationsSystem.Application.Services;
 
 namespace AirlineReservationsSystem.Controllers
 {
@@ -9,10 +20,13 @@ namespace AirlineReservationsSystem.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService userService;
+        private readonly IGoogleAuthService googleAuthService;
 
-        public AccountController(IUserService userService)
+
+        public AccountController(IUserService userService, IGoogleAuthService googleAuthService)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof (userService));
+            this.googleAuthService = googleAuthService?? throw new ArgumentNullException(nameof(googleAuthService));
         }
 
         public IActionResult Login() => View();
@@ -73,6 +87,19 @@ namespace AirlineReservationsSystem.Controllers
         {
             await userService.LogoutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpPost]
+        public IActionResult GoogleLogin()
+        {
+            var redirectUrl = Url.Action("GoogleResponse", "Account");
+            return googleAuthService.InitiateGoogleLogin(redirectUrl!);
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            return await googleAuthService.HandleGoogleResponse(HttpContext);
         }
     }
 }

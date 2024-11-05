@@ -10,6 +10,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         {
         }
 
+
         public DbSet<User> Users { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Flight> Flights { get; set; }

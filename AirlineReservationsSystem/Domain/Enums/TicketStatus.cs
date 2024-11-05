@@ -1,9 +1,9 @@
 ﻿namespace AirlineReservationsSystem.Domain.Enums
 {
-    public enum BookingStatus
+    public enum TicketStatus
     {
-        Confirmed,
-        Canceled,
-        Pending
+        Reserved, // محجوز
+        Canceled, // ملغي
+        CheckedIn // تسجيل الوصول
     }
 }

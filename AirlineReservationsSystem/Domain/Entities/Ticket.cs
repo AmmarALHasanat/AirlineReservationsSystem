@@ -28,10 +28,4 @@ namespace AirlineReservationsSystem.Domain.Entities
         public virtual Flight Flight { get; set; }
     }
 
-    public enum TicketStatus
-    {
-        Reserved, // محجوز
-        Canceled, // ملغي
-        CheckedIn // تسجيل الوصول
-    }
 }

@@ -10,7 +10,6 @@ namespace AirlineReservationsSystem.Domain.Entities
         [StringLength(100)]
         public string? FullName { get; set; }
 
-        [Required]
         [MaxLength(14)]
         [StringLength(14)]
         public override string? PhoneNumber { get; set; }

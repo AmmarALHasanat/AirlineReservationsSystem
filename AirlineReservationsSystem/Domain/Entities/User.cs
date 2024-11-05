@@ -18,5 +18,6 @@ namespace AirlineReservationsSystem.Domain.Entities
         public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
 
+
     }
 }

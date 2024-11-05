@@ -9,11 +9,11 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required(ErrorMessage = "يجب إدخال نقطة البداية.")]
         [MaxLength(100)]
-        public string Origin { get; set; } // نقطة البداية
+        public string Origin { get; set; } // نقة البداية اسم المطار
 
         [Required(ErrorMessage = "يجب إدخال الوجهة.")]
         [MaxLength(100)]
-        public string Destination { get; set; } // الوجهة
+        public string Destination { get; set; } //  الوجهة اسم المطار
 
         [Required(ErrorMessage = "يجب إدخال الوقت المقدر.")]
         [MaxLength(50)]

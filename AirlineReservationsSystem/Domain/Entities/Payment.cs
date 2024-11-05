@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AirlineReservationsSystem.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AirlineReservationsSystem.Domain.Entities
@@ -17,7 +18,7 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required]
         [MaxLength(50)]
-        public string PaymentMethod { get; set; } // طريقة الدفع (مثل بطاقة ائتمان، PayPal، إلخ)
+        public PaymentMethod Type { get; set; } // طريقة الدفع (مثل بطاقة ائتمان، PayPal، إلخ)
 
         public int BookingId { get; set; } // معرّف الحجز المرتبط بالدفع
 

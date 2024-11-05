@@ -9,6 +9,6 @@ namespace AirlineReservationsSystem.Application.Interfaces
         Task<IEnumerable<Booking>> GetAllBookingsAsync();
         Task<Booking> GetBookingByIdAsync(int id);
         Task CreateBookingAsync(Booking booking);
-        IEnumerable<Flight> GetAvailableFlights(); // إذا كان لديك وظيفة لاسترجاع الرحلات المتاحة
+        //IEnumerable<Flight> GetAvailableFlights(); // إذا كان لديك وظيفة لاسترجاع الرحلات المتاحة
     }
 }

@@ -17,7 +17,6 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<TravelRoute> Routes { get; set; }
         public DbSet<Seat> Seats { get; set; }
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<FlightSeat> FlightSeats { get; set; }
@@ -33,16 +32,11 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .HasForeignKey(b => b.UserId);
 
             // ضبط العلاقة بين الرحلة والحجوزات
-            modelBuilder.Entity<Booking>()
-                .HasOne(b => b.Flight)
-                .WithMany(f => f.Bookings)
-                .HasForeignKey(b => b.FlightId);
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Flight)
+                .WithMany(f => f.Tickets)
+                .HasForeignKey(t => t.FlightId);
 
-            // ضبط العلاقة بين المسؤول والمستخدم
-            modelBuilder.Entity<Admin>()
-                .HasOne<User>()
-                .WithMany() // إزالة WithMany() إذا كان العلاقة One-to-One
-                .HasForeignKey(a => a.AdminId);
 
             // ضبط العلاقة بين المقاعد والرحلات في FlightSeat
             modelBuilder.Entity<FlightSeat>()

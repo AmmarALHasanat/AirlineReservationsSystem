@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AirlineReservationsSystem.Domain.Entities
 {
-    public class User:IdentityUser
+    public class User : IdentityUser
     {
-        [Required]
-        [MaxLength(100)]
-        [StringLength(100)]
-        public string? FullName { get; set; }
+        [Required(ErrorMessage = "الاسم الكامل مطلوب.")]
+        [MaxLength(100, ErrorMessage = "الاسم الكامل يجب ألا يتجاوز 100 حرف.")]
+        public string? FullName { get; set; } // الاسم الكامل للمستخدم
 
-        [Required]
-        [MaxLength(14)]
-        [StringLength(14)]
-        public override string? PhoneNumber { get; set; }
+        [Required(ErrorMessage = "رقم الهاتف مطلوب.")]
+        [MaxLength(14, ErrorMessage = "رقم الهاتف يجب ألا يتجاوز 14 حرف.")]
+        public override string? PhoneNumber { get; set; } // رقم الهاتف للمستخدم
+
+        // قائمة الحجوزات المرتبطة بالمستخدم
+        public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\Enums\" />
+    <Folder Include="Views\Booking\" />
   </ItemGroup>
 
 </Project>

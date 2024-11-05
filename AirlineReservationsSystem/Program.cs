@@ -45,6 +45,7 @@ builder.Services.AddAuthentication(
 // Add Scoped
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 

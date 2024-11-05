@@ -11,7 +11,7 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required]
         [ForeignKey("User")]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
 
         public DateTime BookingDate { get; set; }

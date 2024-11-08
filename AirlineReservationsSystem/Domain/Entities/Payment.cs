@@ -6,23 +6,28 @@ namespace AirlineReservationsSystem.Domain.Entities
 {
     public class Payment
     {
-        [Key]
-        public int PaymentId { get; set; } // معرّف فريد للدفع
+        public int PaymentId { get; set; } 
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "يجب أن يكون المبلغ أكبر من 0.")]
-        public decimal Amount { get; set; } // المبلغ المدفوع
+        public decimal Amount { get; set; }
 
         [Required]
-        public DateTime PaymentDate { get; set; } = DateTime.Now; // تاريخ الدفع
+        public DateTime PaymentDate { get; set; } = DateTime.Now; 
 
         [Required]
-        [MaxLength(50)]
-        public PaymentMethod Type { get; set; } // طريقة الدفع (مثل بطاقة ائتمان، PayPal، إلخ)
+        public PaymentMethod Type { get; set; }
 
-        public int BookingId { get; set; } // معرّف الحجز المرتبط بالدفع
+        public PaymentStatus Status { get; set; }
 
-        // الربط مع كلاس Booking
-        public Booking Booking { get; set; }
+        [Required]
+        [ForeignKey("Booking")]
+        public int BookingId { get; set; }
+        public virtual Booking Booking { get; set; }
+
+        [Required]
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }

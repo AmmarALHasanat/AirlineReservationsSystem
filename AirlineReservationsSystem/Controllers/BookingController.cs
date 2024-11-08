@@ -13,7 +13,7 @@ namespace AirlineReservationsSystem.Controllers
         }
         public IActionResult Index()
         {
-             var Bo = _bookingService.GetAllBookingsByUserIdAsync(5);
+             //var Bo = _bookingService.GetAllBookingsByUserIdAsync(5);
             return View();
         }
     }

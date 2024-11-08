@@ -15,21 +15,7 @@ namespace AirlineReservationsSystem.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingsByFlightAsync(int flightId)
-        {
-            var r = await _context.Bookings
-                .Where(b => b.UserId == flightId)
-                .ToListAsync();
-            return r;
-        }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingsByUserIdAsync(int userId)
-        {
-            var r = await _context.Bookings
-                .Where(b => b.UserId == userId)
-                .ToListAsync();
-            return r;
-        }
 
         public async Task UpdateBookingAsync(Booking booking)
         {

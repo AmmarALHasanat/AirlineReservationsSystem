@@ -11,19 +11,19 @@ namespace AirlineReservationsSystem.Domain.Entities
         [Required]
         [ForeignKey("Seat")]
         public int SeatId { get; set; }
-        public virtual Seat Seat { get; set; } // علاقة مع كلاس Seat
-
+        public virtual Seat Seat { get; set; } 
         [Required]
         [ForeignKey("Flight")]
         public int FlightId { get; set; }
-        public virtual Flight Flight { get; set; } // علاقة مع كلاس Flight
+        public virtual Flight Flight { get; set; } 
+
 
         [Required]
-        [Range(0.01, double.MaxValue)] // تحديد الحد الأدنى للسعر
+        [Range(0.01, double.MaxValue)] 
         public float SeatPrice { get; set; }
 
         [Required]
-        [Range(0, 200)] // تحديد الحد الأقصى المتاح للمقاعد
+        [Range(0, 200)]
         public int AvailableSeats { get; set; }
     }
 }

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Update ticket status";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="UpdateStatus" asp-route-ticketId="@ViewData["TicketId"]">
+    <div class="form-group">
+        <label for="status">ticket status</label>
+        <select id="status" name="status" class="form-control">
+            <option value="Pending">On hold</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Canceled</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">تحديث الحالة</button>
+</form>

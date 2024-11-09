@@ -4,6 +4,8 @@
     {
         Reserved, // محجوز
         Canceled, // ملغي
-        CheckedIn // تسجيل الوصول
+        CheckedIn, // تسجيل الوصول
+        Issued,
+        Cancelled
     }
 }

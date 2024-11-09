@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.TravelRoute>
+
+@{
+    ViewData["Title"] = "Travel Routes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Route</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Route ID</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Estimated Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var route in Model)
+        {
+            <tr>
+                <td>@route.RouteId</td>
+                <td>@route.Origin</td>
+                <td>@route.Destination</td>
+                <td>@route.EstimatedTime</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = route.RouteId })" class="btn btn-info">Details</a>
+                    <a href="@Url.Action("Edit", new { id = route.RouteId })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = route.RouteId })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

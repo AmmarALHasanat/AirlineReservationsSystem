@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Cancel ticket";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Are you sure to cancel ticket no @ViewData["TicketId"]؟</p>
+
+<form method="post" asp-action="CancelTicket" asp-route-ticketId="@ViewData["TicketId"]">
+    <button type="submit" class="btn btn-danger">Cancel ticket</button>
+    <a href="@Url.Action("Index", "Ticket")" class="btn btn-secondary">Cancel</a>
+</form>

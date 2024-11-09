@@ -1,0 +1,18 @@
+﻿@model List<AirlineReservationsSystem.Domain.Entities.Booking>
+
+<table>
+    <tr>
+        <th>Booking ID</th>
+        <th>Flight ID</th>
+        <th>Other Data</th>
+    </tr>
+    @foreach (var booking in Model)
+    {
+        <tr>
+            <td>@booking.BookingId</td>
+            <td>@booking.FlightId</td>
+            <td>Other Data</td>
+        </tr>
+    }
+</table>
+

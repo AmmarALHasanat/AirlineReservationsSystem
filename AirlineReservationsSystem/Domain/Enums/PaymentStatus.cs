@@ -5,5 +5,6 @@
         Refund,
         Pending,
         Confirmed,
+        Cancelled,
     }
 }

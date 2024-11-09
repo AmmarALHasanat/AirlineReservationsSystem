@@ -1,6 +1,6 @@
-﻿using AirlineReservationsSystem.Domain.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AirlineReservationsSystem.Domain.Entities;
 
 namespace AirlineReservationsSystem.Infrastructure.Data
 {
@@ -9,6 +9,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Flight> Flights { get; set; }
@@ -19,16 +20,18 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TravelRoute> Routes { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //User Relations
+            // إعداد العلاقات بين الكائنات
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.User)
@@ -42,14 +45,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Booking Relations
-            modelBuilder.Entity<Booking>()
-                .HasMany(b => b.Tickets)
-                .WithOne(t => t.Booking)
-                .HasForeignKey(t => t.BookingId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Flight Relations
+            // تعريف العلاقات بين الكائنات الأخرى
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.Tickets)
                 .WithOne(t => t.Flight)
@@ -68,12 +64,13 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .HasForeignKey(f => f.RouteId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // M:N Flight and Seat name FlightSeat
+            // العلاقة بين Flight و Seat عبر FlightSeat
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.FlightSeats)
                 .WithOne(fs => fs.Flight)
                 .HasForeignKey(fs => fs.FlightId)
                 .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Seat>()
                 .HasMany(s => s.FlightSeats)
                 .WithOne(fs => fs.Seat)
@@ -81,18 +78,45 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FlightSeat>()
-                    .HasKey(fs => fs.FlightSeatId);
+                .HasKey(fs => fs.FlightSeatId);
 
-            // Seat Relations  M:1 Seat : Airplane
+            // العلاقة بين Seat و Airplane
             modelBuilder.Entity<Seat>()
                 .HasOne(s => s.Airplane)
                 .WithMany(a => a.Seats)
                 .HasForeignKey(s => s.AirplaneId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // إضافة فهرس فريد للـ PhoneNumber في الـ User
             modelBuilder.Entity<User>()
-                .HasIndex( u => u.PhoneNumber)
+                .HasIndex(u => u.PhoneNumber)
                 .IsUnique(true);
         }
+
+        public static class DbInitializer
+        {
+            public static async Task Initialize(IServiceProvider serviceProvider)
+            {
+                var context = serviceProvider.GetRequiredService<AppDbContext>();
+
+                // تأكد إذا كانت الجداول تحتوي على بيانات بالفعل (لا تضيف بيانات جديدة إذا كانت موجودة)
+                if (context.Airplanes.Any())
+                {
+                    return; // البيانات موجودة مسبقًا
+                }
+
+                // إضافة طائرات افتراضية
+                context.Airplanes.AddRange(
+                    new Airplane { Model = "Boeing 747", Capacity = 400 },
+                    new Airplane { Model = "Airbus A320", Capacity = 180 },
+                    new Airplane { Model = "Cessna 172", Capacity = 4 }
+                );
+
+                // حفظ البيانات في قاعدة البيانات
+                await context.SaveChangesAsync();
+            }
+        }
+
+
     }
 }

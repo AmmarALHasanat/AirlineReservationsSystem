@@ -4,19 +4,25 @@ using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static AirlineReservationsSystem.Infrastructure.Data.AppDbContext;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
-//Infrastructure
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+
+   //Infrastructure
+
+    // Add services to the container.
+        builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(
         options => options.UseSqlServer(connectionString) 
     );
+
 builder.Services.AddIdentity<User, IdentityRole>
     (options =>{
         options.Password.RequiredUniqueChars = 0;
@@ -47,6 +53,8 @@ builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<ITravelRouteService, TravelRouteService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+
 
 var app = builder.Build();
 

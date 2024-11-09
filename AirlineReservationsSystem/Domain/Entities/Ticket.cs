@@ -32,6 +32,7 @@ namespace AirlineReservationsSystem.Domain.Entities
         public virtual Booking Booking { get; set; }
         public virtual Flight Flight { get; set; }
         public virtual User User { get; set; }
+        public DateTime IssueDate { get; internal set; }
     }
 
 }

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.Seat>
+
+<h2>المقاعد المتاحة</h2>
+<table>
+    <thead>
+        <tr>
+            <th>رقم المقعد</th>
+            <th>الفئة</th>
+            <th>حجز</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var seat in Model)
+        {
+            <tr>
+                <td>@seat.SeatNumber</td>
+                <td>@seat.Class</td>
+                <td>
+                    @if (!seat.IsBooked) // التحقق من حالة الحجز
+                    {
+                        <form method="post" asp-action="BookSeat" asp-route-seatId="@seat.SeatId">
+                            <button type="submit">حجز</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>محجوز</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

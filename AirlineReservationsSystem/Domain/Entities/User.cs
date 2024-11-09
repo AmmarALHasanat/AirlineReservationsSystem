@@ -8,16 +8,14 @@ namespace AirlineReservationsSystem.Domain.Entities
     {
         [Required(ErrorMessage = "الاسم الكامل مطلوب.")]
         [MaxLength(100, ErrorMessage = "الاسم الكامل يجب ألا يتجاوز 100 حرف.")]
-        public string? FullName { get; set; } // الاسم الكامل للمستخدم
+        public string? FullName { get; set; }
 
-        
         [MaxLength(14, ErrorMessage = "رقم الهاتف يجب ألا يتجاوز 14 حرف.")]
-        public override string? PhoneNumber { get; set; } // رقم الهاتف للمستخدم
+        public override string? PhoneNumber { get; set; } 
 
-        // قائمة الحجوزات المرتبطة بالمستخدم
         public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
-
-
+        public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+        public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
     }
 }

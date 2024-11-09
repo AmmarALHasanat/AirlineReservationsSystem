@@ -30,22 +30,23 @@ builder.Services.AddIdentity<User, IdentityRole>
 
 
 
-builder.Services.AddAuthentication(
-    //options =>{
-    //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    //options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-    //}
-    ).AddGoogle(googleOptions =>{
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>{
         googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
         googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
         googleOptions.CallbackPath = "/account/signin-google";
     });
 
 // Add Scoped
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddScoped<IAirplaneeService, AirplaneeService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
+builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ISeatService, SeatService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<ITravelRouteService, TravelRouteService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

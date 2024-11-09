@@ -22,11 +22,11 @@ namespace AirlineReservationsSystem.Domain.Entities
         public int AirplaneId { get; set; }
 
         [Required]
-        [ForeignKey("Route")]
+        [ForeignKey("TravelRoute")]
         public int RouteId { get; set; }
 
         public virtual Airplane Airplane { get; set; }
-        public virtual Route Route { get; set; }
+        public virtual TravelRoute Route { get; set; }
 
         // Navigation Properties
         public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();

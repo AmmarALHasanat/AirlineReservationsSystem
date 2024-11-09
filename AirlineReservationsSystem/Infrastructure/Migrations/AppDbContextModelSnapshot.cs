@@ -54,6 +54,9 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -62,6 +65,8 @@ namespace AirlineReservationsSystem.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BookingId");
+
+                    b.HasIndex("FlightId");
 
                     b.HasIndex("UserId");
 
@@ -499,11 +504,19 @@ namespace AirlineReservationsSystem.Migrations
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.Booking", b =>
                 {
+                    b.HasOne("AirlineReservationsSystem.Domain.Entities.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AirlineReservationsSystem.Domain.Entities.User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Flight");
 
                     b.Navigation("User");
                 });
@@ -592,7 +605,7 @@ namespace AirlineReservationsSystem.Migrations
                     b.HasOne("AirlineReservationsSystem.Domain.Entities.Booking", "Booking")
                         .WithMany("Tickets")
                         .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AirlineReservationsSystem.Domain.Entities.Flight", "Flight")

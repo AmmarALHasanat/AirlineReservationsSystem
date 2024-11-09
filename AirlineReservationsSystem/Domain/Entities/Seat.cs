@@ -8,7 +8,7 @@ namespace AirlineReservationsSystem.Domain.Entities
     public class Seat
     {
         public int SeatId { get; set; }
-
+     
         [Required(ErrorMessage = "رقم المقاعد مطلوب في الفئة مطلوب.")]
         [MaxLength(10)]
         public int SeatNumber { get; set; }
@@ -19,6 +19,9 @@ namespace AirlineReservationsSystem.Domain.Entities
         [ForeignKey("Airplane")]
         public int AirplaneId { get; set; }
         public virtual Airplane Airplane { get; set; }
+
+        public bool IsBooked { get; set; }
+
         public virtual ICollection<FlightSeat> FlightSeats { get; set; } = new List<FlightSeat>();
     }
 }

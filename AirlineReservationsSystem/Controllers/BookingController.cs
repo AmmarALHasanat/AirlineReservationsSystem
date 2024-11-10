@@ -1,9 +1,11 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineReservationsSystem.Controllers
 {
+    [Authorize(policy: "UserOnly")]
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;

@@ -4,6 +4,7 @@ using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,16 @@ builder.Services.AddAuthentication()
         googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
         googleOptions.CallbackPath = "/account/signin-google";
     });
+
+builder.Services.AddAuthorization(options =>
+    {
+        //options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //.RequireAuthenticatedUser().Build();
+
+        options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+        options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+    });
+
 
 // Add Scoped
 builder.Services.AddScoped<IAirplaneeService, AirplaneeService>();

@@ -2,34 +2,26 @@ using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Application.Services;
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static AirlineReservationsSystem.Infrastructure.Data.AppDbContext;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
+//Infrastructure
 
-
-   //Infrastructure
-
-    // Add services to the container.
-        builder.Services.AddControllersWithViews();
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(
-        options => options.UseSqlServer(connectionString) 
+        options => options.UseSqlServer(connectionString)
     );
-
 builder.Services.AddIdentity<User, IdentityRole>
-    (options =>{
+    (options => {
         options.Password.RequiredUniqueChars = 0;
         options.Password.RequireUppercase = false;
         options.Password.RequireLowercase = false;
         options.Password.RequiredLength = 8;
-        options.Password.RequireNonAlphanumeric =false;
+        options.Password.RequireNonAlphanumeric = false;
         // options.SignIn.RequireConfirmedAccount = true
     }).AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
@@ -37,7 +29,7 @@ builder.Services.AddIdentity<User, IdentityRole>
 
 
 builder.Services.AddAuthentication()
-    .AddGoogle(googleOptions =>{
+    .AddGoogle(googleOptions => {
         googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
         googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
         googleOptions.CallbackPath = "/account/signin-google";
@@ -53,8 +45,6 @@ builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<ITravelRouteService, TravelRouteService>();
 builder.Services.AddScoped<IUserService, UserService>();
-
-
 
 var app = builder.Build();
 

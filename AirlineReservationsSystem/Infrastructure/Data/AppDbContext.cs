@@ -25,13 +25,12 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // إعداد العلاقات بين الكائنات
+            //User Relations
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.User)
@@ -45,7 +44,13 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // تعريف العلاقات بين الكائنات الأخرى
+            // Booking Relations
+            modelBuilder.Entity<Booking>()
+                .HasMany(b => b.Tickets)
+                .WithOne(t => t.Booking)
+                .HasForeignKey(t => t.BookingId)
+                .OnDelete(DeleteBehavior.Restrict);
+            // Flight Relations
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.Tickets)
                 .WithOne(t => t.Flight)
@@ -64,13 +69,12 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .HasForeignKey(f => f.RouteId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // العلاقة بين Flight و Seat عبر FlightSeat
+            // M:N Flight and Seat name FlightSeat
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.FlightSeats)
                 .WithOne(fs => fs.Flight)
                 .HasForeignKey(fs => fs.FlightId)
                 .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Seat>()
                 .HasMany(s => s.FlightSeats)
                 .WithOne(fs => fs.Seat)
@@ -78,16 +82,15 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FlightSeat>()
-                .HasKey(fs => fs.FlightSeatId);
+                    .HasKey(fs => fs.FlightSeatId);
 
-            // العلاقة بين Seat و Airplane
+            // Seat Relations  M:1 Seat : Airplane
             modelBuilder.Entity<Seat>()
                 .HasOne(s => s.Airplane)
                 .WithMany(a => a.Seats)
                 .HasForeignKey(s => s.AirplaneId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // إضافة فهرس فريد للـ PhoneNumber في الـ User
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.PhoneNumber)
                 .IsUnique(true);

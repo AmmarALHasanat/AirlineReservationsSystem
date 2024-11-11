@@ -1,10 +1,9 @@
 using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Application.Services;
 using AirlineReservationsSystem.Domain.Entities;
+using AirlineReservationsSystem.Infrastructure;
 using AirlineReservationsSystem.Infrastructure.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authorization;
+using AirlineReservationsSystem.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,16 +39,13 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddAuthorization(options =>
     {
-        //options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        //.RequireAuthenticatedUser().Build();
-
         options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
         options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
     });
 
 
 // Add Scoped
-builder.Services.AddScoped<IAirplaneeService, AirplaneeService>();
+builder.Services.AddScoped<IAirplaneService, AirplaneService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
@@ -68,6 +64,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+ 
+using (var scope = app.Services.CreateScope())
+{
+    await RoleSeeder.SeedRolesAsync(scope.ServiceProvider);
+    await RoleSeeder.SeedAdminsAsync(scope.ServiceProvider);
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -77,8 +79,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<RoleRedirectMiddleware>();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

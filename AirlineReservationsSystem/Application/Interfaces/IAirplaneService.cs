@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservationsSystem.Application.Interfaces
 {
-    public interface IAirplaneeService
+    public interface IAirplaneService
     {
         Task<List<Airplane>> GetAllAirplanesAsync();
     }

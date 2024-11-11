@@ -28,8 +28,10 @@ namespace AirlineReservationsSystem.Application.Services
         public async Task<IdentityResult> RegisterAsync(User user, string password)
         {
             var result = await userManager.CreateAsync(user, password);
+            
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, "User"); 
                 await signInManager.SignInAsync(user, false);
             }
             return result;

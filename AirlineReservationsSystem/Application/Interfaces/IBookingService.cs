@@ -6,9 +6,12 @@ namespace AirlineReservationsSystem.Application.Interfaces
 {
     public interface IBookingService
     {
-        //Task<IEnumerable<Booking>> GetAllBookingsByFlightAsync(int flightId);
-        //Task<IEnumerable<Booking>> GetAllBookingsByUserIdAsync(int userId);
+        Task<List<Booking>> GetAllBookingsAsync();
+        Task<Booking> GetBookingByIdAsync(int bookingId);
         Task CreateBookingAsync(Booking booking);
         Task UpdateBookingAsync(Booking booking);
+        Task DeleteBookingAsync(int bookingId);
+
     }
+
 }

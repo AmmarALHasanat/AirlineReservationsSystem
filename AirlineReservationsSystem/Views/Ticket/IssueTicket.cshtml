@@ -1,0 +1,22 @@
+﻿@model AirlineReservationsSystem.Domain.Entities.Ticket
+
+@{
+    ViewData["Title"] = "Issuing a new ticket";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model != null)
+{
+    <div class="alert alert-success">
+        Ticket issued successfully! Ticket number: @Model.TicketId
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Sorry, the system was unable to issue the ticket.
+    </div>
+}
+
+<a href="@Url.Action("Index", "Ticket")" class="btn btn-primary">Return to ticket list</a>

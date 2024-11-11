@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.Ticket>
+
+@{
+    ViewData["Title"] = "User tickets";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Ticket number</th>
+            <th scope="col">Reservation number</th>
+            <th scope="col">Flight number</th>
+            <th scope="col">Ticket status</th>
+            <th scope="col">Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.TicketId</td>
+                <td>@ticket.BookingId</td>
+                <td>@ticket.FlightId</td>
+                <td>@ticket.Status</td>
+                <td>
+                    <!-- إلغاء التذكرة -->
+                    <a href="@Url.Action("CancelTicket", "Ticket", new { ticketId = ticket.TicketId })" class="btn btn-danger">إلغاء</a>
+
+                    <!-- تحديث الحالة -->
+                    <a href="@Url.Action("UpdateStatus", "Ticket", new { ticketId = ticket.TicketId, status = "Confirmed" })" class="btn btn-success">تأكيد</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

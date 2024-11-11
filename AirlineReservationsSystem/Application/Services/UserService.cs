@@ -1,7 +1,7 @@
-﻿using AirlineReservationsSystem.Application.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
-using AirlineReservationsSystem.Models;
-using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace AirlineReservationsSystem.Application.Services
 {

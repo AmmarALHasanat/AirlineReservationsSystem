@@ -6,5 +6,14 @@ namespace AirlineReservationsSystem.Application.Interfaces
 {
     public interface ITravelRouteService
     {
+        Task<IEnumerable<TravelRoute>> GetAllRoutesAsync();
+
+        Task<TravelRoute> GetRouteByIdAsync(int routeId);
+
+        Task<bool> AddRouteAsync(TravelRoute route);
+
+        Task<bool> UpdateRouteAsync(TravelRoute route);
+
+        Task<bool> DeleteRouteAsync(int routeId);
     }
 }

@@ -1,0 +1,18 @@
+﻿@model AirlineReservationsSystem.Domain.Entities.Payment
+
+<h2>Payment Details</h2>
+
+<div>
+    <strong>Payment ID:</strong> @Model.PaymentId
+</div>
+<div>
+    <strong>Amount:</strong> @Model.Amount
+</div>
+<div>
+    <strong>Status:</strong> @Model.Status
+</div>
+
+<form asp-action="CancelPayment" method="post">
+    <input type="hidden" name="paymentId" value="@Model.PaymentId" />
+    <button type="submit" class="btn btn-danger">Cancel Payment</button>
+</form>

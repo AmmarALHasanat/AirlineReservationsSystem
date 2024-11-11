@@ -15,7 +15,12 @@ namespace AirlineReservationsSystem.Domain.Entities
         [Required]
         [ForeignKey("Flight")]
         public int FlightId { get; set; }
-        public virtual Flight Flight { get; set; } 
+        public virtual Flight Flight { get; set; }
+
+        [Required]
+        [ForeignKey("User")]
+        public string UserId { get; set; } // Ensure this is a string type
+        public virtual User User { get; set; }
 
 
         [Required]

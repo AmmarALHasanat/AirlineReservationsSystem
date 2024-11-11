@@ -1,6 +1,6 @@
-﻿using AirlineReservationsSystem.Domain.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AirlineReservationsSystem.Domain.Entities;
 
 namespace AirlineReservationsSystem.Infrastructure.Data
 {
@@ -9,6 +9,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Flight> Flights { get; set; }
@@ -18,6 +19,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TravelRoute> Routes { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,7 +50,6 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .WithOne(t => t.Booking)
                 .HasForeignKey(t => t.BookingId)
                 .OnDelete(DeleteBehavior.Restrict);
-
             // Flight Relations
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.Tickets)
@@ -91,8 +92,34 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
-                .HasIndex( u => u.PhoneNumber)
+                .HasIndex(u => u.PhoneNumber)
                 .IsUnique(true);
         }
+
+        public static class DbInitializer
+        {
+            public static async Task Initialize(IServiceProvider serviceProvider)
+            {
+                var context = serviceProvider.GetRequiredService<AppDbContext>();
+
+                // تأكد إذا كانت الجداول تحتوي على بيانات بالفعل (لا تضيف بيانات جديدة إذا كانت موجودة)
+                if (context.Airplanes.Any())
+                {
+                    return; // البيانات موجودة مسبقًا
+                }
+
+                // إضافة طائرات افتراضية
+                context.Airplanes.AddRange(
+                    new Airplane { Model = "Boeing 747", Capacity = 400 },
+                    new Airplane { Model = "Airbus A320", Capacity = 180 },
+                    new Airplane { Model = "Cessna 172", Capacity = 4 }
+                );
+
+                // حفظ البيانات في قاعدة البيانات
+                await context.SaveChangesAsync();
+            }
+        }
+
+
     }
 }

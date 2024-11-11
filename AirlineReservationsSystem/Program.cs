@@ -15,15 +15,15 @@ var connectionString = builder.Configuration.GetConnectionString("defaultConnect
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(
-        options => options.UseSqlServer(connectionString) 
+        options => options.UseSqlServer(connectionString)
     );
 builder.Services.AddIdentity<User, IdentityRole>
-    (options =>{
+    (options => {
         options.Password.RequiredUniqueChars = 0;
         options.Password.RequireUppercase = false;
         options.Password.RequireLowercase = false;
         options.Password.RequiredLength = 8;
-        options.Password.RequireNonAlphanumeric =false;
+        options.Password.RequireNonAlphanumeric = false;
         // options.SignIn.RequireConfirmedAccount = true
     }).AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
@@ -31,7 +31,7 @@ builder.Services.AddIdentity<User, IdentityRole>
 
 
 builder.Services.AddAuthentication()
-    .AddGoogle(googleOptions =>{
+    .AddGoogle(googleOptions => {
         googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
         googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
         googleOptions.CallbackPath = "/account/signin-google";

@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="Controllers\Dashboard\" />
     <Folder Include="Views\Booking\" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AirlineReservationsSystem.Domain.Entities
 {
@@ -9,7 +10,7 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required(ErrorMessage = "يجب إدخال نقطة البداية.")]
         [MaxLength(100)]
-        public string Origin { get; set; } 
+        public string Origin { get; set; }
 
         [Required(ErrorMessage = "يجب إدخال الوجهة.")]
         [MaxLength(100)]
@@ -17,8 +18,9 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required(ErrorMessage = "يجب إدخال الوقت المقدر.")]
         [MaxLength(50)]
-        public string EstimatedTime { get; set; } 
+        public string EstimatedTime { get; set; }
 
+        // علاقة مع الـ Flights
         public virtual ICollection<Flight> Flights { get; set; }
     }
 }

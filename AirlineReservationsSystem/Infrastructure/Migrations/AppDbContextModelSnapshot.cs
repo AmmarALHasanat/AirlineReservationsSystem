@@ -54,6 +54,9 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -62,6 +65,8 @@ namespace AirlineReservationsSystem.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BookingId");
+
+                    b.HasIndex("FlightId");
 
                     b.HasIndex("UserId");
 
@@ -113,6 +118,9 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
 
@@ -122,11 +130,19 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<float>("SeatPrice")
                         .HasColumnType("real");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("FlightSeatId");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("FlightId");
 
                     b.HasIndex("SeatId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FlightSeats");
                 });
@@ -211,6 +227,9 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<int>("Class")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsBooked")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SeatNumber")
                         .HasMaxLength(10)
                         .HasColumnType("int");
@@ -235,6 +254,9 @@ namespace AirlineReservationsSystem.Migrations
 
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("IssueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -499,11 +521,19 @@ namespace AirlineReservationsSystem.Migrations
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.Booking", b =>
                 {
+                    b.HasOne("AirlineReservationsSystem.Domain.Entities.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AirlineReservationsSystem.Domain.Entities.User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Flight");
 
                     b.Navigation("User");
                 });
@@ -529,6 +559,10 @@ namespace AirlineReservationsSystem.Migrations
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.FlightSeat", b =>
                 {
+                    b.HasOne("AirlineReservationsSystem.Domain.Entities.Booking", null)
+                        .WithMany("FlightSeats")
+                        .HasForeignKey("BookingId");
+
                     b.HasOne("AirlineReservationsSystem.Domain.Entities.Flight", "Flight")
                         .WithMany("FlightSeats")
                         .HasForeignKey("FlightId")
@@ -541,9 +575,17 @@ namespace AirlineReservationsSystem.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("AirlineReservationsSystem.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Flight");
 
                     b.Navigation("Seat");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.Notification", b =>
@@ -674,6 +716,8 @@ namespace AirlineReservationsSystem.Migrations
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.Booking", b =>
                 {
+                    b.Navigation("FlightSeats");
+
                     b.Navigation("Tickets");
                 });
 

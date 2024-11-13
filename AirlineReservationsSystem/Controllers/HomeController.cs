@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace AirlineReservationsSystem.Controllers
 {
-    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,17 +14,12 @@ namespace AirlineReservationsSystem.Controllers
             _logger = logger;
         }
 
-        [Authorize(Roles = "Admin, User")]
         public IActionResult Index()
         {
+
             return View();
         }
 
-        [Authorize(policy:"UserOnly")]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

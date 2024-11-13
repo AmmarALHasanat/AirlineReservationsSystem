@@ -1,3 +1,4 @@
+using AirlineReservationsSystem.Domain.Dictionaries;
 using AirlineReservationsSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace AirlineReservationsSystem.Controllers
 
         public IActionResult Index()
         {
-
+            ViewData["codes"] = AirportCodes.Codes;
             return View();
         }
 

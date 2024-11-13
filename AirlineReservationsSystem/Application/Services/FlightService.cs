@@ -36,6 +36,12 @@ namespace AirlineReservationsSystem.Application.Services
             }
         }
 
+        // create or update fligth by admin roule only 
+        // search for AirportNames and add key + city >> file in Domain/Dictionaries/AirportNames.cs
+        // or company name
+
+
+
         public async Task<Flight> GetFlightByIdAsync(int flightId)
         {
             return await _context.Flights.FindAsync(flightId);

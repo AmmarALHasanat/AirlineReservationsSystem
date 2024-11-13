@@ -25,6 +25,8 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            TravelRouteSeeder.Run(modelBuilder);
+
             //User Relations
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User)
@@ -66,7 +68,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
             modelBuilder.Entity<Flight>()
                 .HasOne(f => f.Route)
                 .WithMany(tr => tr.Flights)
-                .HasForeignKey(f => f.RouteId)
+                .HasForeignKey(f => f.TravelRouteId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // M:N Flight and Seat name FlightSeat
@@ -95,31 +97,6 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .HasIndex(u => u.PhoneNumber)
                 .IsUnique(true);
         }
-
-        public static class DbInitializer
-        {
-            public static async Task Initialize(IServiceProvider serviceProvider)
-            {
-                var context = serviceProvider.GetRequiredService<AppDbContext>();
-
-                // تأكد إذا كانت الجداول تحتوي على بيانات بالفعل (لا تضيف بيانات جديدة إذا كانت موجودة)
-                if (context.Airplanes.Any())
-                {
-                    return; // البيانات موجودة مسبقًا
-                }
-
-                // إضافة طائرات افتراضية
-                context.Airplanes.AddRange(
-                    new Airplane { Model = "Boeing 747", Capacity = 400 },
-                    new Airplane { Model = "Airbus A320", Capacity = 180 },
-                    new Airplane { Model = "Cessna 172", Capacity = 4 }
-                );
-
-                // حفظ البيانات في قاعدة البيانات
-                await context.SaveChangesAsync();
-            }
-        }
-
 
     }
 }

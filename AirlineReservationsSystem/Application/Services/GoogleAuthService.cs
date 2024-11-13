@@ -44,12 +44,18 @@ namespace AirlineReservationsSystem.Application.Services
                 if (!createResult.Succeeded)
                 {
                     return new RedirectToActionResult("Login", "Account", null);
-                }
+                }     
             }
 
             await signInManager.SignInAsync(user, isPersistent: false);
             await httpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
+            //if (await userManager.IsInRoleAsync(user, "Admin"))
+            //{
+            //    return new RedirectToRouteResult("Dashboard");
+            //}
+
+            // how i can give user logid in to check rule
             return new RedirectToActionResult("Index", "Home", null);
         }
     }

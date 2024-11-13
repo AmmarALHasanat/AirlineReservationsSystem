@@ -15,25 +15,25 @@ namespace AirlineReservationsSystem.Controllers
         
         public async Task<IActionResult> Index()
         {
-            var seats = await _seatService.GetAllSeatsAsync();
-            return View(seats);
+            //var seats = await _seatService.GetAllSeatsAsync();
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> BookSeat(int seatId)
         {
-            var userId = User.Identity.Name;           
-            var success = await _seatService.BookSeatAsync(seatId, userId);
+            var userId = User.Identity.Name;
+            //var success = await _seatService.BookSeatAsync(seatId, userId);
 
-            if (success)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.ErrorMessage = "you can not bookin , try again";
+            //if (success)
+            //{
+            //    return RedirectToAction("Index");
+            //}
+            //else
+            //{
+            //    ViewBag.ErrorMessage = "you can not bookin , try again";
                 return View();
-            }
+            //}
         }
     }
 }

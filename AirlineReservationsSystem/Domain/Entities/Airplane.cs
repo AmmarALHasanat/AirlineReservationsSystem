@@ -8,12 +8,15 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required]
         [MaxLength(100)]
-        public string Model { get; set; } 
+        public string Model { get; set; }
+        
         [Required]
-        public int Capacity { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Total number of seats must be greater than or equal to 0.")]
+        public int Capacity { get; set; } // total of number seat class E,F,B 
 
 
-        public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
+
+        public virtual List<Seat> Seats { get; set; } = new List<Seat>();
         public virtual ICollection<Flight> Flights { get; set; } = new List<Flight>();
 
     }

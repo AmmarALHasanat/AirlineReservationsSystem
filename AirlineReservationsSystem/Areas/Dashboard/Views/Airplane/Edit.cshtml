@@ -1,0 +1,51 @@
+﻿@using AirlineReservationsSystem.Domain.Enums
+@model AirplaneUpdateViewModel
+
+<h1>Edit Airplane</h1>
+
+<form asp-action="Edit" method="post">
+
+    <div class="form-group">
+        <label asp-for="Airplane.AirplaneId" class="control-label"></label>
+        <input asp-for="Airplane.AirplaneId" class="form-control" readonly />
+        <span asp-validation-for="Airplane.AirplaneId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Airplane.Model" class="control-label"></label>
+        <input asp-for="Airplane.Model" class="form-control" />
+        <span asp-validation-for="Airplane.Model" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Airplane.Capacity" class="control-label"></label>
+        <input asp-for="Airplane.Capacity" class="form-control" />
+        <span asp-validation-for="Airplane.Capacity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Seats</label>
+        <ul class="list-unstyled">
+            @for (int i = 0; i < Model.Seats.Count; i++)
+            {
+                <li class="seat-item mb-2">
+                    <span class="me-2">@Model.Seats[i].Class</span> 
+                    <input asp-for="Seats[i].SeatId" hidden />
+                    <input asp-for="Seats[i].TotalNumber" class="form-control d-inline-block w-auto ml-2" placeholder="Number of Seats" value="@Model.Seats[i].TotalNumber" />
+                    <span asp-validation-for="Seats[@i].TotalNumber" class="text-danger"></span>
+                </li>
+            }
+        </ul>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="submit" value="Save Changes" class="btn btn-primary" />
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

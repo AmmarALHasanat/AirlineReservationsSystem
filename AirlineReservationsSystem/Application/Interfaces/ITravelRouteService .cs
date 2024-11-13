@@ -12,8 +12,5 @@ namespace AirlineReservationsSystem.Application.Interfaces
 
         Task<bool> AddRouteAsync(TravelRoute route);
 
-        Task<bool> UpdateRouteAsync(TravelRoute route);
-
-        Task<bool> DeleteRouteAsync(int routeId);
     }
 }

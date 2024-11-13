@@ -17,5 +17,8 @@ namespace AirlineReservationsSystem.Domain.Entities
         public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
         public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
+        // add ICollection Role for user.
+
+
     }
 }

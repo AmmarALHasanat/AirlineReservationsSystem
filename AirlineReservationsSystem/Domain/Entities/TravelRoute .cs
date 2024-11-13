@@ -5,22 +5,20 @@ namespace AirlineReservationsSystem.Domain.Entities
 {
     public class TravelRoute
     {
-        [Key]
-        public int RouteId { get; set; }
+        public int TravelRouteId { get; set; }
 
-        [Required(ErrorMessage = "يجب إدخال نقطة البداية.")]
-        [MaxLength(100)]
+        [Required]
+        [MaxLength(3)]
         public string Origin { get; set; }
 
-        [Required(ErrorMessage = "يجب إدخال الوجهة.")]
-        [MaxLength(100)]
+        [Required]
+        [MaxLength(3)]
         public string Destination { get; set; }
 
-        [Required(ErrorMessage = "يجب إدخال الوقت المقدر.")]
+        [Required]
         [MaxLength(50)]
         public string EstimatedTime { get; set; }
 
-        // علاقة مع الـ Flights
-        public virtual ICollection<Flight> Flights { get; set; }
+        public virtual ICollection<Flight> Flights { get; set; } 
     }
 }

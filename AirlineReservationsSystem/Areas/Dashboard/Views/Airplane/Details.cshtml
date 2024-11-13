@@ -1,0 +1,38 @@
+﻿@model Airplane
+
+<h1>Airplane Details</h1>
+
+<div class="airplane-details">
+    <p><strong>Model:</strong> @Model.Model</p>
+    <p><strong>Capacity:</strong> @Model.Capacity</p>
+</div>
+
+<h3>Seats</h3>
+@if (Model.Seats != null && Model.Seats.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Seat Class</th>
+                <th>Total Number of Seats</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var seat in Model.Seats)
+            {
+                <tr>
+                    <td>@seat.Class</td>
+                    <td>@seat.TotalNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No seats assigned to this airplane.</p>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

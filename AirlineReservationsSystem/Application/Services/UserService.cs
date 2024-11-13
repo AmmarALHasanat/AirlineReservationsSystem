@@ -7,38 +7,37 @@ namespace AirlineReservationsSystem.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
+        public UserService(SignInManager<User> signInManager, UserManager<User> userManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
 
-        // Login method
-        public async Task<SignInResult> LoginAsync(string email, string password, bool rememberMe)
+        public async Task<SignInResult> LoginAsync(string email, string password,bool rememberMe)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return SignInResult.Failed; // Failed to find user
-            }
-
-            return await _signInManager.PasswordSignInAsync(user, password, rememberMe, false);
+            
+            return await signInManager.PasswordSignInAsync(
+                email,
+                password,
+                rememberMe,
+                lockoutOnFailure: false); ;
         }
 
-        // Register method
         public async Task<IdentityResult> RegisterAsync(User user, string password)
         {
-            var result = await _userManager.CreateAsync(user, password);
+            var result = await userManager.CreateAsync(user, password);
+            
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "User"); 
+                await signInManager.SignInAsync(user, false);
+            }
             return result;
+            
         }
+        public async Task LogoutAsync() => await signInManager.SignOutAsync();
 
-        // Logout method
-        public async Task LogoutAsync()
-        {
-            await _signInManager.SignOutAsync();
-        }
     }
 }

@@ -1,7 +1,6 @@
 using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Application.Services;
 using AirlineReservationsSystem.Domain.Entities;
-using AirlineReservationsSystem.Infrastructure;
 using AirlineReservationsSystem.Infrastructure.Data;
 using AirlineReservationsSystem.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Identity;
@@ -80,6 +79,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<RoleRedirectMiddleware>();
+
+
+app.MapAreaControllerRoute(
+    name: "Dashboard",
+    areaName: "Dashboard",
+    pattern: "Dashboard/{controller?}/{action?}/{id?}");
+
 
 app.MapControllerRoute(
     name: "default",

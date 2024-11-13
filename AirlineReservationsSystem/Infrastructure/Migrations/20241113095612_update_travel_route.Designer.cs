@@ -4,6 +4,7 @@ using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineReservationsSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113095612_update_travel_route")]
+    partial class update_travel_route
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,190 +308,6 @@ namespace AirlineReservationsSystem.Migrations
                     b.HasKey("TravelRouteId");
 
                     b.ToTable("Routes");
-
-                    b.HasData(
-                        new
-                        {
-                            TravelRouteId = 1,
-                            Destination = "AQJ",
-                            EstimatedTime = "4h 0m",
-                            Origin = "AMM"
-                        },
-                        new
-                        {
-                            TravelRouteId = 2,
-                            Destination = "DXB",
-                            EstimatedTime = "3h 45m",
-                            Origin = "AMM"
-                        },
-                        new
-                        {
-                            TravelRouteId = 3,
-                            Destination = "RUH",
-                            EstimatedTime = "2h 0m",
-                            Origin = "AMM"
-                        },
-                        new
-                        {
-                            TravelRouteId = 4,
-                            Destination = "DXB",
-                            EstimatedTime = "2h 30m",
-                            Origin = "AQJ"
-                        },
-                        new
-                        {
-                            TravelRouteId = 5,
-                            Destination = "DXB",
-                            EstimatedTime = "1h 10m",
-                            Origin = "AUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 6,
-                            Destination = "SHJ",
-                            EstimatedTime = "1h 0m",
-                            Origin = "AUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 7,
-                            Destination = "SHJ",
-                            EstimatedTime = "1h 0m",
-                            Origin = "DXB"
-                        },
-                        new
-                        {
-                            TravelRouteId = 8,
-                            Destination = "RUH",
-                            EstimatedTime = "1h 50m",
-                            Origin = "DXB"
-                        },
-                        new
-                        {
-                            TravelRouteId = 9,
-                            Destination = "AUH",
-                            EstimatedTime = "1h 30m",
-                            Origin = "AAN"
-                        },
-                        new
-                        {
-                            TravelRouteId = 10,
-                            Destination = "JED",
-                            EstimatedTime = "1h 15m",
-                            Origin = "RUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 11,
-                            Destination = "DMM",
-                            EstimatedTime = "1h 40m",
-                            Origin = "RUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 12,
-                            Destination = "MED",
-                            EstimatedTime = "1h 30m",
-                            Origin = "RUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 13,
-                            Destination = "AHB",
-                            EstimatedTime = "1h 40m",
-                            Origin = "RUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 14,
-                            Destination = "TIF",
-                            EstimatedTime = "1h 25m",
-                            Origin = "RUH"
-                        },
-                        new
-                        {
-                            TravelRouteId = 15,
-                            Destination = "HBE",
-                            EstimatedTime = "1h 0m",
-                            Origin = "CAI"
-                        },
-                        new
-                        {
-                            TravelRouteId = 16,
-                            Destination = "SSH",
-                            EstimatedTime = "1h 30m",
-                            Origin = "CAI"
-                        },
-                        new
-                        {
-                            TravelRouteId = 17,
-                            Destination = "LXR",
-                            EstimatedTime = "1h 0m",
-                            Origin = "CAI"
-                        },
-                        new
-                        {
-                            TravelRouteId = 18,
-                            Destination = "HRG",
-                            EstimatedTime = "1h 10m",
-                            Origin = "CAI"
-                        },
-                        new
-                        {
-                            TravelRouteId = 19,
-                            Destination = "ASW",
-                            EstimatedTime = "1h 20m",
-                            Origin = "CAI"
-                        },
-                        new
-                        {
-                            TravelRouteId = 20,
-                            Destination = "ESB",
-                            EstimatedTime = "1h 15m",
-                            Origin = "IST"
-                        },
-                        new
-                        {
-                            TravelRouteId = 21,
-                            Destination = "ADB",
-                            EstimatedTime = "1h 10m",
-                            Origin = "IST"
-                        },
-                        new
-                        {
-                            TravelRouteId = 22,
-                            Destination = "AYT",
-                            EstimatedTime = "1h 25m",
-                            Origin = "IST"
-                        },
-                        new
-                        {
-                            TravelRouteId = 23,
-                            Destination = "BJV",
-                            EstimatedTime = "1h 15m",
-                            Origin = "IST"
-                        },
-                        new
-                        {
-                            TravelRouteId = 24,
-                            Destination = "TZX",
-                            EstimatedTime = "1h 30m",
-                            Origin = "IST"
-                        },
-                        new
-                        {
-                            TravelRouteId = 25,
-                            Destination = "DXB",
-                            EstimatedTime = "1h 30m",
-                            Origin = "KWI"
-                        },
-                        new
-                        {
-                            TravelRouteId = 26,
-                            Destination = "RUH",
-                            EstimatedTime = "1h 30m",
-                            Origin = "KWI"
-                        });
                 });
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.User", b =>

@@ -17,22 +17,17 @@
             <th>Origin</th>
             <th>Destination</th>
             <th>Estimated Time</th>
-            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var route in Model)
         {
             <tr>
-                <td>@route.RouteId</td>
+                <td>@route.TravelRouteId</td>
                 <td>@route.Origin</td>
                 <td>@route.Destination</td>
                 <td>@route.EstimatedTime</td>
-                <td>
-                    <a href="@Url.Action("Details", new { id = route.RouteId })" class="btn btn-info">Details</a>
-                    <a href="@Url.Action("Edit", new { id = route.RouteId })" class="btn btn-warning">Edit</a>
-                    <a href="@Url.Action("Delete", new { id = route.RouteId })" class="btn btn-danger">Delete</a>
-                </td>
+
             </tr>
         }
     </tbody>

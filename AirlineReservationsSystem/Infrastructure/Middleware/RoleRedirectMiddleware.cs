@@ -18,9 +18,11 @@ namespace AirlineReservationsSystem.Infrastructure.Middleware
             var userManager = context.RequestServices.GetRequiredService<UserManager<User>>();
             if (context.User.Identity?.IsAuthenticated == true)
             {
+               
                 var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var path = context.Request.Path;
 
-                if (userId != null)
+                if (userId != null && !path.StartsWithSegments("/Account"))
                 {
                     var user = await userManager.FindByIdAsync(userId);
 
@@ -30,7 +32,6 @@ namespace AirlineReservationsSystem.Infrastructure.Middleware
                         var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
                         //var isUser = await userManager.IsInRoleAsync(user, "User");
 
-                        var path = context.Request.Path;
 
                         if (path.StartsWithSegments("/Dashboard") && !isAdmin)
                         {
@@ -40,7 +41,7 @@ namespace AirlineReservationsSystem.Infrastructure.Middleware
 
                         if (!path.StartsWithSegments("/Dashboard") && isAdmin)
                         {
-                            context.Response.Redirect("/Dashboard");
+                            context.Response.Redirect("/Dashboard/Airplane/index");
                             return;
                         }
                     }

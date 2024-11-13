@@ -24,7 +24,7 @@ namespace AirlineReservationsSystem.Application.Services
         // جلب مسار معين حسب الـ ID
         public async Task<TravelRoute> GetRouteByIdAsync(int routeId)
         {
-            return await _context.Routes .FirstOrDefaultAsync(r => r.RouteId == routeId);  // استخدام Routes هنا
+            return await _context.Routes .FirstOrDefaultAsync(r => r.TravelRouteId == routeId);  // استخدام Routes هنا
         }
 
         // إضافة مسار جديد
@@ -39,7 +39,7 @@ namespace AirlineReservationsSystem.Application.Services
         public async Task<bool> UpdateRouteAsync(TravelRoute route)
         {
             var existingRoute = await _context.Routes
-                .FirstOrDefaultAsync(r => r.RouteId == route.RouteId);
+                .FirstOrDefaultAsync(r => r.TravelRouteId == route.TravelRouteId);
 
             if (existingRoute == null)
             {
@@ -59,7 +59,7 @@ namespace AirlineReservationsSystem.Application.Services
         public async Task<bool> DeleteRouteAsync(int routeId)
         {
             var route = await _context.Routes
-                .FirstOrDefaultAsync(r => r.RouteId == routeId);
+                .FirstOrDefaultAsync(r => r.TravelRouteId == routeId);
 
             if (route == null)
             {

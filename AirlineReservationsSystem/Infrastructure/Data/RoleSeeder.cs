@@ -1,7 +1,7 @@
 ﻿using AirlineReservationsSystem.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace AirlineReservationsSystem.Infrastructure
+namespace AirlineReservationsSystem.Infrastructure.Data
 {
     public static class RoleSeeder
     {

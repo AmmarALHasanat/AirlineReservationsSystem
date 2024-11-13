@@ -1,0 +1,45 @@
+﻿@using AirlineReservationsSystem.Domain.Enums
+@model AirplaneCreateViewModel
+
+<h1>Create New Airplane</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="airplane.Model" class="control-label"></label>
+        <input asp-for="airplane.Model" class="form-control" />
+        <span asp-validation-for="airplane.Model" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="airplane.Capacity" class="control-label"></label>
+        <input asp-for="airplane.Capacity" class="form-control" />
+        <span asp-validation-for="airplane.Capacity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Seats</label>
+        <ul class="list-unstyled">
+            @for (int i = 0; i < Model.Seats.Count; i++)
+            {
+                <li class="seat-item mb-2">
+                    <span class="me-2">@Model.Seats[i].Class</span>
+                    <input type="hidden" name="Seats[@i].Class" value="@Model.Seats[i].Class" />
+                    <input type="number" name="Seats[@i].TotalNumber" class="form-control d-inline-block w-auto ml-2" placeholder="Number of Seats" value="@Model.Seats[i].TotalNumber" />
+                    <span asp-validation-for="Seats[@i].TotalNumber" class="text-danger"></span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

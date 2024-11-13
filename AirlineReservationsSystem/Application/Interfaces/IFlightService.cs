@@ -10,6 +10,6 @@ namespace AirlineReservationsSystem.Application.Interfaces
         Task UpdateFlightAsync(Flight flight);                // تحديث بيانات رحلة
         Task DeleteFlightAsync(int flightId);                 // حذف رحلة بناءً على الـ ID
         Task<Flight> GetFlightByIdAsync(int flightId);        // الحصول على رحلة واحدة بناءً على الـ ID
-        Task<List<Flight>> GetAllFlightsAsync();              // الحصول على جميع الرحلات
+        Task<List<Flight>> GetAllFlightsAsync();
     }
 }

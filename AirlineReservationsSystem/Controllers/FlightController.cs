@@ -17,7 +17,7 @@ namespace AirlineReservationsSystem.Controllers
         public async Task<IActionResult> Index()
         {
             var flights = await _flightService.GetAllFlightsAsync();
-            return View(flights);  // سيتم عرض الرحلات في View
+            return View(flights);
         }
 
         // عرض صفحة إضافة رحلة جديدة

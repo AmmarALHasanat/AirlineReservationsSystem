@@ -23,7 +23,7 @@ namespace AirlineReservationsSystem.Domain.Entities
 
         [Required]
         [ForeignKey("TravelRoute")]
-        public int RouteId { get; set; }
+        public int TravelRouteId { get; set; }
 
         public virtual Airplane Airplane { get; set; }
         public virtual TravelRoute Route { get; set; }

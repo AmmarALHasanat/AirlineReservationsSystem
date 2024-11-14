@@ -39,6 +39,23 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 await _userManager.CreateAsync(adminUser, adminPassword);
             }
 
+
+            adminEmail = "thabetmahmoud238@gmail.com";
+            adminPassword = "Admin@123";
+
+            adminUser = await _userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                adminUser = new User
+                {
+                    FullName = "Mahmoud Azzam",
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true,
+                };
+                await _userManager.CreateAsync(adminUser, adminPassword);
+            }
+
             if (!await _userManager.IsInRoleAsync(adminUser, "Admin"))
             {
                 await _userManager.AddToRoleAsync(adminUser, "Admin");

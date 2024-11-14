@@ -1,0 +1,48 @@
+﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.Flight>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Airplane.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+
+            <td>
+                @Html.DisplayNameFor(model => model.Route.Destination)
+            </td>
+            <td>
+                Action
+            </td>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airplane.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+
+            <td>
+                    @Html.DisplayFor(modelItem => item.Route.Destination)
+            </td>
+            <td>
+                new Bookking >> select number of tiket
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

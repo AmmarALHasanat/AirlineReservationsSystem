@@ -1,0 +1,63 @@
+﻿@using AirlineReservationsSystem.Domain.Dictionaries
+@model AirlineReservationsSystem.Models.CreateFlightViewModel
+
+@{
+    ViewData["Title"] = "Create New Flight";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="FlightNumber">Flight Number</label>
+        <input asp-for="FlightNumber" class="form-control" />
+        <span asp-validation-for="FlightNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="AirplaneId">Airplane</label>
+        <select asp-for="AirplaneId" class="form-control">
+            <option value="">Select an Airplane</option>
+            @foreach (var airplane in Model.Airplanes)
+            {
+                <option value="@airplane.AirplaneId">@airplane.Model</option>
+            }
+        </select>
+        <span asp-validation-for="AirplaneId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="TravelRouteId">Travel Route</label>
+        <select asp-for="TravelRouteId" class="form-control">
+            <option value="">Select a Route</option>
+            @foreach (var route in Model.Routes)
+            {
+                <option value="@route.TravelRouteId">@AirportCodes.Codes[@route.Origin].City - @AirportCodes.Codes[@route.Destination].City</option>
+            }
+        </select>
+        <span asp-validation-for="TravelRouteId" class="text-danger"></span>
+    </div>
+    ArrivalTime = DepartureTime + route.Destination ()
+
+    <div class="form-group">
+        <label for="DepartureTime">Departure Time</label>
+        <input asp-for="DepartureTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="DepartureTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="ArrivalTime">Arrival Time</label>
+        <input asp-for="ArrivalTime" class="form-control" type="datetime-local"  disabled />
+        <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Create Flight</button>
+    </div>
+</form>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

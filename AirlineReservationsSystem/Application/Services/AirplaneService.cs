@@ -15,7 +15,7 @@ namespace AirlineReservationsSystem.Application.Services
         public async Task<List<Airplane>> GetAllAirplanesAsync()
         {
             // reatun seats realtionn with Airplanes
-            return await _context.Airplanes.ToListAsync();
+            return await _context.Airplanes.Include(a => a.Seats).ToListAsync();
         }
 
         public async Task<Airplane?> GetAirplaneByIdAsync(int id)

@@ -1,5 +1,6 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
+using AirlineReservationsSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineReservationsSystem.Controllers
@@ -13,70 +14,33 @@ namespace AirlineReservationsSystem.Controllers
             _flightService = flightService;
         }
 
-        // عرض جميع الرحلات
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var flights = await _flightService.GetAllFlightsAsync();
-            return View(flights);
-        }
-
-        // عرض صفحة إضافة رحلة جديدة
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // إضافة رحلة جديدة
-        [HttpPost]
-        public async Task<IActionResult> Create(Flight flight)
-        {
-            if (ModelState.IsValid)
+            var viewModel = new FlightSearchViewModel
             {
-                await _flightService.CreateFlightAsync(flight);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(flight);
+                AvailableFlights = new List<Flight>() // Initialize with an empty list
+            };
+            return View(viewModel);
         }
 
-        // عرض صفحة تعديل رحلة
-        public async Task<IActionResult> Edit(int id)
+        [HttpGet]
+        public async Task<IActionResult> SearchFlights(string from, string to, DateTime? departureDate, DateTime? returnDate, string tripType)
         {
-            var flight = await _flightService.GetFlightByIdAsync(id);
-            if (flight == null)
+            var availableFlights = await _flightService.GetAvailableFlightsAsync(from, to, departureDate, returnDate, tripType);
+
+            var viewModel = new FlightSearchViewModel
             {
-                return NotFound();
-            }
-            return View(flight);
+                From = from,
+                To = to,
+                DepartureDate = departureDate,
+                ReturnDate = returnDate,
+                TripType = tripType,
+                AvailableFlights = availableFlights
+            };
+
+            return PartialView("_AvailableFlights", viewModel.AvailableFlights);
         }
 
-        // تحديث الرحلة
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, Flight flight)
-        {
-            if (id != flight.FlightId)
-            {
-                return BadRequest();
-            }
-
-            if (ModelState.IsValid)
-            {
-                await _flightService.UpdateFlightAsync(flight);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(flight);
-        }
-
-        // حذف رحلة
-        public async Task<IActionResult> Delete(int id)
-        {
-            var flight = await _flightService.GetFlightByIdAsync(id);
-            if (flight == null)
-            {
-                return NotFound();
-            }
-
-            await _flightService.DeleteFlightAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
     }
 }

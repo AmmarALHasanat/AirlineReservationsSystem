@@ -42,6 +42,8 @@
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action  @(currentController == "Airplane" ? "active" : "")" asp-area="Dashboard" asp-controller="Airplane" asp-action="Index">Airplanes</a>
                     <a class="list-group-item list-group-item-action @(currentController == "Flight" ? "active" : "")" asp-area="Dashboard" asp-controller="Flight" asp-action="Index">Flights</a>
+                    <a class="list-group-item list-group-item-action  @(currentController == "TravelRoute" ? "active" : "")" asp-area="Dashboard" asp-controller="TravelRoute" asp-action="Index">Travel Routes</a>
+
                     <!-- Add more links as needed -->
                 </div>
             </aside>

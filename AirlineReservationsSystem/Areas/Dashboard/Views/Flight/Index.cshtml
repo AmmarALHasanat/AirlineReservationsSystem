@@ -1,65 +1,53 @@
 ﻿@model IEnumerable<Flight>
 
 @{
-    ViewData["Title"] = "Flight";
+    ViewData["Title"] = "Flights";
 }
 
-<h1>View</h1>
+<h2 class="mb-4">@ViewData["Title"]</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">List of Flights</h5>
+    <a asp-action="Create" class="btn btn-primary">Create New Flight</a>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FlightId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FlightNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartureTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArrivalTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AirplaneId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TravelRouteId)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.FlightId)</th>
+            <th>@Html.DisplayNameFor(model => model.FlightNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.DepartureTime)</th>
+            <th>@Html.DisplayNameFor(model => model.ArrivalTime)</th>
+            <th>@Html.DisplayNameFor(model => model.AirplaneId)</th>
+            <th>@Html.DisplayNameFor(model => model.TravelRouteId)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlightId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlightNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArrivalTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AirplaneId)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.TravelRouteId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @if (Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.FlightId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FlightNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DepartureTime)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ArrivalTime)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AirplaneId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TravelRouteId)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FlightId" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.FlightId" class="btn btn-sm btn-info me-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.FlightId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center">No flights available.</td>
+            </tr>
+        }
     </tbody>
 </table>

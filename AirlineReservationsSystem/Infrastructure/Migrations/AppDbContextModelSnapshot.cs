@@ -317,177 +317,569 @@ namespace AirlineReservationsSystem.Migrations
                         new
                         {
                             TravelRouteId = 2,
-                            Destination = "DXB",
-                            EstimatedTime = "3h 45m",
-                            Origin = "AMM"
+                            Destination = "AMM",
+                            EstimatedTime = "4h 0m",
+                            Origin = "AQJ"
                         },
                         new
                         {
                             TravelRouteId = 3,
-                            Destination = "RUH",
-                            EstimatedTime = "2h 0m",
+                            Destination = "AUH",
+                            EstimatedTime = "3h 15m",
                             Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 4,
-                            Destination = "DXB",
-                            EstimatedTime = "2h 30m",
-                            Origin = "AQJ"
+                            Destination = "AMM",
+                            EstimatedTime = "3h 15m",
+                            Origin = "AUH"
                         },
                         new
                         {
                             TravelRouteId = 5,
                             Destination = "DXB",
-                            EstimatedTime = "1h 10m",
-                            Origin = "AUH"
+                            EstimatedTime = "3h 30m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 6,
-                            Destination = "SHJ",
-                            EstimatedTime = "1h 0m",
-                            Origin = "AUH"
+                            Destination = "AMM",
+                            EstimatedTime = "3h 30m",
+                            Origin = "DXB"
                         },
                         new
                         {
                             TravelRouteId = 7,
                             Destination = "SHJ",
-                            EstimatedTime = "1h 0m",
-                            Origin = "DXB"
+                            EstimatedTime = "3h 40m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 8,
-                            Destination = "RUH",
-                            EstimatedTime = "1h 50m",
-                            Origin = "DXB"
+                            Destination = "AMM",
+                            EstimatedTime = "3h 40m",
+                            Origin = "SHJ"
                         },
                         new
                         {
                             TravelRouteId = 9,
-                            Destination = "AUH",
+                            Destination = "RKT",
                             EstimatedTime = "1h 30m",
-                            Origin = "AAN"
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 10,
-                            Destination = "JED",
-                            EstimatedTime = "1h 15m",
-                            Origin = "RUH"
+                            Destination = "AMM",
+                            EstimatedTime = "1h 30m",
+                            Origin = "RKT"
                         },
                         new
                         {
                             TravelRouteId = 11,
-                            Destination = "DMM",
-                            EstimatedTime = "1h 40m",
-                            Origin = "RUH"
+                            Destination = "AAN",
+                            EstimatedTime = "2h 0m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 12,
-                            Destination = "MED",
-                            EstimatedTime = "1h 30m",
-                            Origin = "RUH"
+                            Destination = "AMM",
+                            EstimatedTime = "2h 0m",
+                            Origin = "AAN"
                         },
                         new
                         {
                             TravelRouteId = 13,
-                            Destination = "AHB",
-                            EstimatedTime = "1h 40m",
-                            Origin = "RUH"
+                            Destination = "RUH",
+                            EstimatedTime = "3h 10m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 14,
-                            Destination = "TIF",
-                            EstimatedTime = "1h 25m",
+                            Destination = "AMM",
+                            EstimatedTime = "3h 10m",
                             Origin = "RUH"
                         },
                         new
                         {
                             TravelRouteId = 15,
-                            Destination = "HBE",
-                            EstimatedTime = "1h 0m",
-                            Origin = "CAI"
+                            Destination = "JED",
+                            EstimatedTime = "2h 50m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 16,
-                            Destination = "SSH",
-                            EstimatedTime = "1h 30m",
-                            Origin = "CAI"
+                            Destination = "AMM",
+                            EstimatedTime = "2h 50m",
+                            Origin = "JED"
                         },
                         new
                         {
                             TravelRouteId = 17,
-                            Destination = "LXR",
-                            EstimatedTime = "1h 0m",
-                            Origin = "CAI"
+                            Destination = "DMM",
+                            EstimatedTime = "3h 5m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 18,
-                            Destination = "HRG",
-                            EstimatedTime = "1h 10m",
-                            Origin = "CAI"
+                            Destination = "AMM",
+                            EstimatedTime = "3h 5m",
+                            Origin = "DMM"
                         },
                         new
                         {
                             TravelRouteId = 19,
-                            Destination = "ASW",
-                            EstimatedTime = "1h 20m",
-                            Origin = "CAI"
+                            Destination = "AHB",
+                            EstimatedTime = "3h 20m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 20,
-                            Destination = "ESB",
-                            EstimatedTime = "1h 15m",
-                            Origin = "IST"
+                            Destination = "AMM",
+                            EstimatedTime = "3h 20m",
+                            Origin = "AHB"
                         },
                         new
                         {
                             TravelRouteId = 21,
-                            Destination = "ADB",
-                            EstimatedTime = "1h 10m",
-                            Origin = "IST"
+                            Destination = "CAI",
+                            EstimatedTime = "1h 45m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 22,
-                            Destination = "AYT",
-                            EstimatedTime = "1h 25m",
-                            Origin = "IST"
+                            Destination = "AMM",
+                            EstimatedTime = "1h 45m",
+                            Origin = "CAI"
                         },
                         new
                         {
                             TravelRouteId = 23,
-                            Destination = "BJV",
-                            EstimatedTime = "1h 15m",
-                            Origin = "IST"
+                            Destination = "SSH",
+                            EstimatedTime = "3h 10m",
+                            Origin = "AMM"
                         },
                         new
                         {
                             TravelRouteId = 24,
+                            Destination = "AMM",
+                            EstimatedTime = "3h 10m",
+                            Origin = "SSH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 25,
+                            Destination = "IST",
+                            EstimatedTime = "2h 45m",
+                            Origin = "AMM"
+                        },
+                        new
+                        {
+                            TravelRouteId = 26,
+                            Destination = "AMM",
+                            EstimatedTime = "2h 45m",
+                            Origin = "IST"
+                        },
+                        new
+                        {
+                            TravelRouteId = 27,
+                            Destination = "ESB",
+                            EstimatedTime = "4h 10m",
+                            Origin = "AMM"
+                        },
+                        new
+                        {
+                            TravelRouteId = 28,
+                            Destination = "AMM",
+                            EstimatedTime = "4h 10m",
+                            Origin = "ESB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 29,
+                            Destination = "TZX",
+                            EstimatedTime = "2h 55m",
+                            Origin = "AMM"
+                        },
+                        new
+                        {
+                            TravelRouteId = 30,
+                            Destination = "AMM",
+                            EstimatedTime = "2h 55m",
+                            Origin = "TZX"
+                        },
+                        new
+                        {
+                            TravelRouteId = 31,
+                            Destination = "RUH",
+                            EstimatedTime = "2h 45m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 32,
+                            Destination = "AUH",
+                            EstimatedTime = "2h 45m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 33,
+                            Destination = "JED",
+                            EstimatedTime = "2h 20m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 34,
+                            Destination = "AUH",
+                            EstimatedTime = "2h 20m",
+                            Origin = "JED"
+                        },
+                        new
+                        {
+                            TravelRouteId = 35,
+                            Destination = "DMM",
+                            EstimatedTime = "2h 30m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 36,
+                            Destination = "AUH",
+                            EstimatedTime = "2h 30m",
+                            Origin = "DMM"
+                        },
+                        new
+                        {
+                            TravelRouteId = 37,
+                            Destination = "AHB",
+                            EstimatedTime = "2h 50m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 38,
+                            Destination = "AUH",
+                            EstimatedTime = "2h 50m",
+                            Origin = "AHB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 39,
+                            Destination = "CAI",
+                            EstimatedTime = "3h 10m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 40,
+                            Destination = "AUH",
+                            EstimatedTime = "3h 10m",
+                            Origin = "CAI"
+                        },
+                        new
+                        {
+                            TravelRouteId = 41,
+                            Destination = "SSH",
+                            EstimatedTime = "3h 0m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 42,
+                            Destination = "AUH",
+                            EstimatedTime = "3h 0m",
+                            Origin = "SSH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 43,
+                            Destination = "IST",
+                            EstimatedTime = "3h 30m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 44,
+                            Destination = "AUH",
+                            EstimatedTime = "3h 30m",
+                            Origin = "IST"
+                        },
+                        new
+                        {
+                            TravelRouteId = 45,
+                            Destination = "ESB",
+                            EstimatedTime = "4h 0m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 46,
+                            Destination = "AUH",
+                            EstimatedTime = "4h 0m",
+                            Origin = "ESB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 47,
+                            Destination = "TZX",
+                            EstimatedTime = "3h 40m",
+                            Origin = "AUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 48,
+                            Destination = "AUH",
+                            EstimatedTime = "3h 40m",
+                            Origin = "TZX"
+                        },
+                        new
+                        {
+                            TravelRouteId = 49,
+                            Destination = "RUH",
+                            EstimatedTime = "2h 55m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 50,
+                            Destination = "DXB",
+                            EstimatedTime = "2h 55m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 51,
+                            Destination = "JED",
+                            EstimatedTime = "2h 25m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 52,
+                            Destination = "DXB",
+                            EstimatedTime = "2h 25m",
+                            Origin = "JED"
+                        },
+                        new
+                        {
+                            TravelRouteId = 53,
+                            Destination = "DMM",
+                            EstimatedTime = "2h 35m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 54,
+                            Destination = "DXB",
+                            EstimatedTime = "2h 35m",
+                            Origin = "DMM"
+                        },
+                        new
+                        {
+                            TravelRouteId = 55,
+                            Destination = "AHB",
+                            EstimatedTime = "3h 10m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 56,
+                            Destination = "DXB",
+                            EstimatedTime = "3h 10m",
+                            Origin = "AHB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 57,
+                            Destination = "CAI",
+                            EstimatedTime = "3h 0m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 58,
+                            Destination = "DXB",
+                            EstimatedTime = "3h 0m",
+                            Origin = "CAI"
+                        },
+                        new
+                        {
+                            TravelRouteId = 59,
+                            Destination = "SSH",
+                            EstimatedTime = "3h 15m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 60,
+                            Destination = "DXB",
+                            EstimatedTime = "3h 15m",
+                            Origin = "SSH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 61,
+                            Destination = "IST",
+                            EstimatedTime = "3h 10m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 62,
+                            Destination = "DXB",
+                            EstimatedTime = "3h 10m",
+                            Origin = "IST"
+                        },
+                        new
+                        {
+                            TravelRouteId = 63,
+                            Destination = "ESB",
+                            EstimatedTime = "4h 0m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 64,
+                            Destination = "DXB",
+                            EstimatedTime = "4h 0m",
+                            Origin = "ESB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 65,
+                            Destination = "TZX",
+                            EstimatedTime = "3h 25m",
+                            Origin = "DXB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 66,
+                            Destination = "DXB",
+                            EstimatedTime = "3h 25m",
+                            Origin = "TZX"
+                        },
+                        new
+                        {
+                            TravelRouteId = 67,
+                            Destination = "CAI",
+                            EstimatedTime = "3h 0m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 68,
+                            Destination = "RUH",
+                            EstimatedTime = "3h 0m",
+                            Origin = "CAI"
+                        },
+                        new
+                        {
+                            TravelRouteId = 69,
+                            Destination = "SSH",
+                            EstimatedTime = "3h 30m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 70,
+                            Destination = "RUH",
+                            EstimatedTime = "3h 30m",
+                            Origin = "SSH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 71,
+                            Destination = "IST",
+                            EstimatedTime = "3h 0m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 72,
+                            Destination = "RUH",
+                            EstimatedTime = "3h 0m",
+                            Origin = "IST"
+                        },
+                        new
+                        {
+                            TravelRouteId = 73,
+                            Destination = "ESB",
+                            EstimatedTime = "3h 15m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 74,
+                            Destination = "RUH",
+                            EstimatedTime = "3h 15m",
+                            Origin = "ESB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 75,
+                            Destination = "TZX",
+                            EstimatedTime = "3h 10m",
+                            Origin = "RUH"
+                        },
+                        new
+                        {
+                            TravelRouteId = 76,
+                            Destination = "RUH",
+                            EstimatedTime = "3h 10m",
+                            Origin = "TZX"
+                        },
+                        new
+                        {
+                            TravelRouteId = 77,
+                            Destination = "ESB",
+                            EstimatedTime = "1h 40m",
+                            Origin = "IST"
+                        },
+                        new
+                        {
+                            TravelRouteId = 78,
+                            Destination = "IST",
+                            EstimatedTime = "1h 40m",
+                            Origin = "ESB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 79,
                             Destination = "TZX",
                             EstimatedTime = "1h 30m",
                             Origin = "IST"
                         },
                         new
                         {
-                            TravelRouteId = 25,
-                            Destination = "DXB",
+                            TravelRouteId = 80,
+                            Destination = "IST",
                             EstimatedTime = "1h 30m",
-                            Origin = "KWI"
+                            Origin = "TZX"
                         },
                         new
                         {
-                            TravelRouteId = 26,
-                            Destination = "RUH",
-                            EstimatedTime = "1h 30m",
-                            Origin = "KWI"
+                            TravelRouteId = 81,
+                            Destination = "TZX",
+                            EstimatedTime = "1h 20m",
+                            Origin = "ESB"
+                        },
+                        new
+                        {
+                            TravelRouteId = 82,
+                            Destination = "ESB",
+                            EstimatedTime = "1h 20m",
+                            Origin = "TZX"
                         });
                 });
 

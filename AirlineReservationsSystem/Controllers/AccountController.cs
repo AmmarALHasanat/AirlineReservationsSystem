@@ -16,8 +16,7 @@ using AirlineReservationsSystem.Application.Services;
 
 namespace AirlineReservationsSystem.Controllers
 {
-    //Test Test
-    [Route("[controller]/[action]")]
+    //[Route("[controller]/[action]")]
     public class AccountController : Controller
     {
         private readonly IUserService userService;

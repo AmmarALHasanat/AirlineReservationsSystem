@@ -4,6 +4,8 @@ using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace AirlineReservationsSystem.Application.Services
 {
@@ -16,26 +18,29 @@ namespace AirlineReservationsSystem.Application.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<TravelRoute>> GetAllRoutesAsync()
+        public async Task<List<TravelRoute>> GetAllRoutesAsync()
         {
-            return await _context.Routes.ToListAsync();  // استخدام Routes هنا
+            return await _context.Routes.ToListAsync();
         }
 
-        // جلب مسار معين حسب الـ ID
+        public IPagedList<TravelRoute> GetPaginatedRoutesAsync(int pageNumber=1, int pageSize=10)
+        {
+            var routes = _context.Routes.AsQueryable();
+            return routes.ToPagedList(pageNumber, pageSize);
+        }
+
         public async Task<TravelRoute> GetRouteByIdAsync(int routeId)
         {
             return await _context.Routes .FirstOrDefaultAsync(r => r.TravelRouteId == routeId);  // استخدام Routes هنا
         }
 
-        // إضافة مسار جديد
         public async Task<bool> AddRouteAsync(TravelRoute route)
         {
-            await _context.Routes.AddAsync(route);  // استخدام Routes هنا
+            await _context.Routes.AddAsync(route);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        // تحديث مسار موجود
         public async Task<bool> UpdateRouteAsync(TravelRoute route)
         {
             var existingRoute = await _context.Routes
@@ -50,12 +55,11 @@ namespace AirlineReservationsSystem.Application.Services
             existingRoute.Destination = route.Destination;
             existingRoute.EstimatedTime = route.EstimatedTime;
 
-            _context.Routes.Update(existingRoute);  // استخدام Routes هنا
+            _context.Routes.Update(existingRoute);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        // حذف مسار
         public async Task<bool> DeleteRouteAsync(int routeId)
         {
             var route = await _context.Routes

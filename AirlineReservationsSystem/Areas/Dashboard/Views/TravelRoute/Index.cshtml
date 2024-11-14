@@ -1,17 +1,22 @@
-﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.TravelRoute>
+﻿@using AirlineReservationsSystem.Domain.Dictionaries
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model X.PagedList.IPagedList<TravelRoute>
 
 @{
     ViewData["Title"] = "Travel Routes";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="mb-4">@ViewData["Title"]</h2>
 
-<p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">List of Travel Routes</h5>
     <a href="@Url.Action("Create")" class="btn btn-primary">Create New Route</a>
-</p>
+</div>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
         <tr>
             <th>Route ID</th>
             <th>Origin</th>
@@ -23,12 +28,32 @@
         @foreach (var route in Model)
         {
             <tr>
-                <td>@route.TravelRouteId</td>
-                <td>@route.Origin</td>
-                <td>@route.Destination</td>
+                <td>@route.TravelRouteId </td>
+                <td>(@route.Origin) @AirportCodes.Codes[@route.Origin].City, @AirportCodes.Codes[@route.Destination].Country</td>
+                <td>(@route.Destination) @AirportCodes.Codes[@route.Destination].City, @AirportCodes.Codes[@route.Destination].Country</td>
                 <td>@route.EstimatedTime</td>
-
             </tr>
         }
     </tbody>
 </table>
+
+@Html.PagedListPager(
+        Model,
+        page => Url.Action("Index", new { pageNumber = page }),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" },
+            DisplayLinkToIndividualPages = true,
+            MaximumPageNumbersToDisplay = 4,
+            FunctionToDisplayEachPageNumber = page =>
+                ((page - 1) * 15 + 1).ToString() + "-" + (((page - 1) * 15) + 15).ToString(),
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+            DisplayLinkToNextPage = PagedListDisplayMode.Never,
+            DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+            LinkToFirstPageFormat = $"{(@ViewBag.FirstPageNumber - 1) * 15 + 1} - {((@ViewBag.FirstPageNumber - 1) * 15) + 15}",
+            LinkToLastPageFormat = $"{(@ViewBag.LastPageNumber - 1) * 15 + 1} - {((@ViewBag.LastPageNumber - 1) * 15) + 15}",
+            DisplayPageCountAndCurrentLocation = false,
+        })
+

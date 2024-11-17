@@ -1,0 +1,77 @@
+﻿@using AirlineReservationsSystem.Domain.Dictionaries
+@model Flight
+
+@{
+    ViewData["Title"] = $"Details for Flight @{Model.FlightNumber}";
+}
+
+<div class="col-12 col-sm-10 col-md-8 mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">Flight Details</h3>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title mb-4" style="font-size: 1.5rem;">
+                Flight Number: <strong>@Model.FlightNumber</strong>
+            </h5>
+
+            <div class="row mb-3 text-center text-md-start">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="text-muted">
+                        <strong>Departure Time:</strong> @Model.DepartureTime.ToString("f")
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-muted">
+                        <strong>Arrival Time:</strong> @Model.ArrivalTime.ToString("f")
+                    </p>
+                </div>
+            </div>
+
+            <p style="font-size: 1.2rem;">
+                <strong>Airplane Model:</strong> <span class="badge bg-info">@Model.Airplane.Model</span>
+            </p>
+            <p style="font-size: 1.2rem;">
+                <strong>Route:</strong>
+                <span class="text-success">@AirportCodes.Codes[Model.Route.Origin].City (@Model.Route.Origin)</span>
+                <span class="mx-2">to</span>
+                <span class="text-danger">@AirportCodes.Codes[Model.Route.Destination].City (@Model.Route.Destination)</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-secondary text-white text-center">
+            <h3 class="mb-0">Seats and Prices</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Seat Type</th>
+                        <th>Price</th>
+                        <th>Available Seats</th>
+                        <th>Total Seats</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var seatFlight in Model.FlightSeats)
+                    {
+                        <tr>
+                            <td>@seatFlight.Seat.Class</td>
+                            <td>@seatFlight.SeatPrice.ToString("C")</td>
+                            <td>@seatFlight.AvailableSeats</td>
+                            <td>@seatFlight.Seat.TotalNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "Flight")" class="btn btn-outline-secondary btn-lg">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>

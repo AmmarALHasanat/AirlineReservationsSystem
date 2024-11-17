@@ -4,6 +4,7 @@ using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineReservationsSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241116121737_update-databse")]
+    partial class updatedatabse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,7 +95,8 @@ namespace AirlineReservationsSystem.Migrations
 
                     b.Property<string>("FlightNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("TravelRouteId")
                         .HasColumnType("int");
@@ -126,8 +130,8 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<int>("SeatId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("SeatPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("SeatPrice")
+                        .HasColumnType("real");
 
                     b.HasKey("FlightSeatId");
 

@@ -1,8 +1,10 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
+using AirlineReservationsSystem.Domain.Enums;
 using AirlineReservationsSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservationsSystem.Controllers.Dashboard
 {
@@ -38,24 +40,69 @@ namespace AirlineReservationsSystem.Controllers.Dashboard
             {
                 Airplanes = airplanes,
                 Routes = routes,
-                DepartureTime = DateTime.Now,
-                ArrivalTime = DateTime.Now
+                DepartureTime = DateTime.Now.AddDays(1),
+                ArrivalTime = DateTime.Now.AddDays(1),
             };
 
             return View(viewModel);
         }
 
-        //public async Task<IActionResult> Create()
-        //{
-        //    // flight.AirplaneId
-        //    //flight.TravelRouteId
-        //    //flight.ArrivalTime
-        //    //flight.DepartureTime
-        //    //flight.Route.EstimatedTime
-        //    //flight.FlightNumber
-        //    //flight.FlightSeats >> flight.Airplane.Seats[0].SeatId flight.Airplane.Seats[0].FlightSeats
-        //    // FlightSeats have 
-        //    return View();
-        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateFlightViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Flight flight = new Flight
+                    {
+                        FlightNumber = viewModel.FlightNumber,
+                        DepartureTime = viewModel.DepartureTime,
+                        ArrivalTime = viewModel.ArrivalTime,
+                        AirplaneId = viewModel.AirplaneId,
+                        TravelRouteId = viewModel.TravelRouteId,
+                    };
+                    Dictionary<SeatType, decimal> prices = new Dictionary<SeatType, decimal> {
+                        { SeatType.Business, viewModel.BusinessClassPrice},
+                        { SeatType.Economy, viewModel.EconomyClassPrice},
+                        { SeatType.FirstClass, viewModel.FirstClassPrice},
+                    };
+
+                    await _flightService.CreateFlightAsync(flight, prices);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new { message = ex.Message });
+                }
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                           .Select(e => e.ErrorMessage)
+                                           .ToList();
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error);
+            }
+
+            return View(viewModel);
+
+        }
+
+
+        // Details
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var flight = await _flightService.GetFlightByIdAsync(id);
+            if (flight== null)
+            {
+                return NotFound();
+            }
+            return View(flight);
+        }
+
     }
 }

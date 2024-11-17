@@ -1,5 +1,7 @@
 ﻿using AirlineReservationsSystem.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace AirlineReservationsSystem.Infrastructure.Data
 {
@@ -23,42 +25,38 @@ namespace AirlineReservationsSystem.Infrastructure.Data
         public static async Task SeedAdminsAsync(IServiceProvider serviceProvider)
         {
             var _userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            var adminEmail = "ammarabed13@gmail.com";
-            var adminPassword = "Admin@123";
-
-            var adminUser = await _userManager.FindByEmailAsync(adminEmail);
-            if (adminUser == null)
+            var adminUsers = new List<(string Email, string Password, string FullName)>
             {
-                adminUser = new User
-                {
-                    FullName = "Ammar AL-Hasanat",
-                    UserName = adminEmail,
-                    Email = adminEmail,
-                    EmailConfirmed = true,
-                };
-                await _userManager.CreateAsync(adminUser, adminPassword);
+                ("ammarabed13@gmail.com", "Admin@123", "Ammar AL-Hasanat"),
+                ("thabetmahmoud238@gmail.com", "Admin@123", "Mahmoud Azzam")
+            };
+
+            foreach (var admin in adminUsers)
+            {
+                await EnsureAdminAsync(_userManager, admin.Email, admin.Password, admin.FullName);
             }
 
+        }
 
-            adminEmail = "thabetmahmoud238@gmail.com";
-            adminPassword = "Admin@123";
 
-            adminUser = await _userManager.FindByEmailAsync(adminEmail);
-            if (adminUser == null)
+        private static async Task EnsureAdminAsync(UserManager<User> userManager, string email, string password, string fullName)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
             {
-                adminUser = new User
+                user = new User
                 {
-                    FullName = "Mahmoud Azzam",
-                    UserName = adminEmail,
-                    Email = adminEmail,
+                    FullName = fullName,
+                    UserName = email,
+                    Email = email,
                     EmailConfirmed = true,
                 };
-                await _userManager.CreateAsync(adminUser, adminPassword);
+                await userManager.CreateAsync(user, password);
             }
 
-            if (!await _userManager.IsInRoleAsync(adminUser, "Admin"))
+            if (!await userManager.IsInRoleAsync(user, "Admin"))
             {
-                await _userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(user, "Admin");
             }
         }
     }

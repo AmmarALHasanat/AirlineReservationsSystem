@@ -10,7 +10,6 @@ namespace AirlineReservationsSystem.Domain.Entities
         public int FlightId { get; set; }
 
         [Required]
-        [MaxLength(10)] // يمكن ضبط الطول حسب تنسيق أرقام الرحلات
         public string FlightNumber { get; set; }
 
         public DateTime DepartureTime { get; set; }

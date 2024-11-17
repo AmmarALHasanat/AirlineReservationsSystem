@@ -17,15 +17,10 @@ namespace AirlineReservationsSystem.Domain.Entities
         public int FlightId { get; set; }
         public virtual Flight Flight { get; set; }
 
-        [Required]
-        [ForeignKey("User")]
-        public string UserId { get; set; } // Ensure this is a string type
-        public virtual User User { get; set; }
-
 
         [Required]
         [Range(0.01, double.MaxValue)] 
-        public float SeatPrice { get; set; }
+        public decimal SeatPrice { get; set; }
 
         [Required]
         [Range(0, 200)]

@@ -1,7 +1,9 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
+using AirlineReservationsSystem.Domain.Enums;
 using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 
 namespace AirlineReservationsSystem.Application.Services
 {
@@ -52,11 +54,41 @@ namespace AirlineReservationsSystem.Application.Services
 
 
 
-        public async Task CreateFlightAsync(Flight flight)
+        public async Task CreateFlightAsync(Flight flight, Dictionary<SeatType, decimal> prices)
         {
-            _context.Flights.Add(flight);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Flights.Add(flight);
+
+                var seats = await _context.Seats
+                                          .Where(s => s.AirplaneId == flight.AirplaneId)
+                                          .ToListAsync();
+
+                if (seats == null || !seats.Any())
+                {
+                    throw new InvalidOperationException("No seats found for the specified airplane.");
+                }
+
+                var flightSeats = seats.Select(seat => new FlightSeat
+                {
+                    SeatId = seat.SeatId,
+                    FlightId = flight.FlightId,
+                    SeatPrice = prices.ContainsKey(seat.Class) ? prices[seat.Class] : 
+                            throw new KeyNotFoundException($"Price for seat type {seat.Class} not found."),
+                    AvailableSeats = seat.TotalNumber 
+                }).ToList();
+
+                flight.FlightSeats.AddRange(flightSeats);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating flight: {ex.Message}");
+                throw;
+            }
         }
+
 
 
         // create or update fligth by admin roule only 
@@ -65,14 +97,23 @@ namespace AirlineReservationsSystem.Application.Services
 
 
 
-        public async Task<Flight> GetFlightByIdAsync(int flightId)
+        public async Task<Flight?> GetFlightByIdAsync(int flightId)
         {
-            return await _context.Flights.FindAsync(flightId);
+
+            return await _context.Flights
+                .Include(f => f.Airplane)
+                .Include(f => f.Route)
+                .Include(f => f.FlightSeats)
+                .ThenInclude(fs => fs.Seat)
+                .FirstOrDefaultAsync(f => f.FlightId == flightId);
         }
 
         public async Task<List<Flight>> GetAllFlightsAsync()
         {
-            return await _context.Flights.ToListAsync();
+            return await _context.Flights
+                .Include(f => f.Airplane)
+                .Include(f => f.Route)
+                .Where(f => f.DepartureTime >= DateTime.Now).ToListAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Flight>
+﻿@using AirlineReservationsSystem.Domain.Dictionaries
+@model IEnumerable<Flight>
 
 @{
     ViewData["Title"] = "Flights";
@@ -18,8 +19,9 @@
             <th>@Html.DisplayNameFor(model => model.FlightNumber)</th>
             <th>@Html.DisplayNameFor(model => model.DepartureTime)</th>
             <th>@Html.DisplayNameFor(model => model.ArrivalTime)</th>
-            <th>@Html.DisplayNameFor(model => model.AirplaneId)</th>
-            <th>@Html.DisplayNameFor(model => model.TravelRouteId)</th>
+            <th>Airplane</th>
+            <th>@Html.DisplayNameFor(model => model.Route.Origin)</th>
+            <th>@Html.DisplayNameFor(model => model.Route.Destination)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -33,12 +35,12 @@
                     <td>@Html.DisplayFor(modelItem => item.FlightNumber)</td>
                     <td>@Html.DisplayFor(modelItem => item.DepartureTime)</td>
                     <td>@Html.DisplayFor(modelItem => item.ArrivalTime)</td>
-                    <td>@Html.DisplayFor(modelItem => item.AirplaneId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TravelRouteId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Airplane.Model)</td>
+                    <td>(@item.Route.Origin) @AirportCodes.Codes[item.Route.Origin].City</td>
+                    <td>(@item.Route.Destination) @AirportCodes.Codes[item.Route.Destination].City</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.FlightId" class="btn btn-sm btn-warning me-1">Edit</a>
                         <a asp-action="Details" asp-route-id="@item.FlightId" class="btn btn-sm btn-info me-1">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.FlightId" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
             }

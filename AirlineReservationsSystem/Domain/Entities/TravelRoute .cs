@@ -15,8 +15,6 @@ namespace AirlineReservationsSystem.Domain.Entities
         [MaxLength(3)]
         public string Destination { get; set; }
 
-        [Required]
-        [MaxLength(50)]
         public string EstimatedTime { get; set; }
 
         public virtual ICollection<Flight> Flights { get; set; } 

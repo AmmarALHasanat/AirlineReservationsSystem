@@ -19,7 +19,7 @@ namespace AirlineReservationsSystem.Controllers
         // لعرض كل الحجوزات
         public async Task<IActionResult> Index()
         {
-            var bookings = await _bookingService.GetAllBookingsAsync();
+            var bookings = await _bookingService.GetBookingByIdAsync(1);
             return View(bookings);
         }
 

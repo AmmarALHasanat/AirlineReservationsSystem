@@ -1,5 +1,5 @@
 ﻿@using AirlineReservationsSystem.Domain.Dictionaries
-@model AirlineReservationsSystem.Models.CreateFlightViewModel
+@model CreateFlightViewModel
 
 @{
     ViewData["Title"] = "Create New Flight";
@@ -7,7 +7,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create">
     <div class="form-group">
         <label for="FlightNumber">Flight Number</label>
         <input asp-for="FlightNumber" class="form-control" />
@@ -32,12 +32,13 @@
             <option value="">Select a Route</option>
             @foreach (var route in Model.Routes)
             {
-                <option value="@route.TravelRouteId">@AirportCodes.Codes[@route.Origin].City - @AirportCodes.Codes[@route.Destination].City</option>
+                <option value="@route.TravelRouteId">
+                    @AirportCodes.Codes[@route.Origin].City - @AirportCodes.Codes[@route.Destination].City (@route.EstimatedTime)
+                </option>
             }
         </select>
         <span asp-validation-for="TravelRouteId" class="text-danger"></span>
     </div>
-    ArrivalTime = DepartureTime + route.Destination ()
 
     <div class="form-group">
         <label for="DepartureTime">Departure Time</label>
@@ -47,17 +48,68 @@
 
     <div class="form-group">
         <label for="ArrivalTime">Arrival Time</label>
-        <input asp-for="ArrivalTime" class="form-control" type="datetime-local"  disabled />
+        <input asp-for="ArrivalTime" class="form-control" type="datetime-local" />
         <span asp-validation-for="ArrivalTime" class="text-danger"></span>
     </div>
 
     <div class="form-group">
+        <label for="EconomyClassPrice">Economy Class Price</label>
+        <input asp-for="EconomyClassPrice" class="form-control" type="number" step="0.01" min="0" />
+        <span asp-validation-for="EconomyClassPrice" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="BusinessClassPrice">Business Class Price</label>
+        <input asp-for="BusinessClassPrice" class="form-control" type="number" step="0.01" min="0" />
+        <span asp-validation-for="BusinessClassPrice" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="FirstClassPrice">First Class Price</label>
+        <input asp-for="FirstClassPrice" class="form-control" type="number" step="0.01" min="0" />
+        <span asp-validation-for="FirstClassPrice" class="text-danger"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group mt-4">
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
         <button type="submit" class="btn btn-success">Create Flight</button>
     </div>
 </form>
 
-<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
-
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+               const currentDate = new Date();
+               currentDate.setDate(currentDate.getDate() + 1);
+               const minDate = currentDate.toISOString().slice(0, 16);
+               $('#DepartureTime').attr('min', minDate);
+               $('#ArrivalTime').attr('min', minDate);
+
+               const travelRoutes = @Html.Raw(Json.Serialize(Model.Routes.Select(r => new { r.TravelRouteId, r.EstimatedTime }).ToList()));
+
+               $('#TravelRouteId, #DepartureTime').on('change', function () {
+                   const routeId = parseInt($('#TravelRouteId').val(), 10);
+                   const departureTime = $('#DepartureTime').val();
+                   if (routeId && departureTime) {
+                       const selectedRoute = travelRoutes.find(route => route.travelRouteId === routeId);
+
+                       if (selectedRoute && selectedRoute.estimatedTime) {
+                           const estimatedTime = selectedRoute.estimatedTime;
+                           const match = estimatedTime.match(/(\d+)h\s*(\d+)?m?/);
+                           const hours = match ? parseInt(match[1], 10) : 0;
+                           const minutes = match && match[2] ? parseInt(match[2], 10) : 0;
+                           
+                           const departureDate = new Date(departureTime);
+                           const arrivalDate = new Date(departureDate.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+                           const formattedDate = `${arrivalDate.getFullYear()}-${(arrivalDate.getMonth() + 1).toString().padStart(2, '0')}-${arrivalDate.getDate().toString().padStart(2, '0')}T${arrivalDate.getHours().toString().padStart(2, '0')}:${arrivalDate.getMinutes().toString().padStart(2, '0')}`;
+
+                           $('#ArrivalTime').val(formattedDate).prop('disabled', false);
+                       }
+                   }
+               });
+           });
+    </script>
 }

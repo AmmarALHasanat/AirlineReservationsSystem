@@ -3,10 +3,11 @@ using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace AirlineReservationsSystem.Application.Services
 {
-    public class BookingService : IBookingService
+    public class BookingService : IBookingService                               
     {
         private readonly AppDbContext _context;
 
@@ -52,3 +53,6 @@ namespace AirlineReservationsSystem.Application.Services
     }
 
 }
+
+//private readonly SignInManager<User> signInManager;
+//private readonly UserManager<User> userManager;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace AirlineReservationsSystem.Controllers
 {
     [Authorize(policy: "UserOnly")]
+    
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;
@@ -17,8 +18,9 @@ namespace AirlineReservationsSystem.Controllers
         }
 
         // لعرض كل الحجوزات
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()  // must add getbookinguserId 
         {
+            
             var bookings = await _bookingService.GetAllBookingsAsync();
             return View(bookings);
         }

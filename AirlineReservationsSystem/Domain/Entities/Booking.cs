@@ -9,9 +9,6 @@ namespace AirlineReservationsSystem.Domain.Entities
     public class Booking
     {
         public int BookingId { get; set; }
-        public virtual ICollection<FlightSeat> FlightSeats { get; set; } = new List<FlightSeat>();
-        public int FlightId {  get; set; }//
-        public Flight Flight { get; set; }
         public DateTime BookingDate { get; set; }
         public BookingStatus Status { get; set; }
 

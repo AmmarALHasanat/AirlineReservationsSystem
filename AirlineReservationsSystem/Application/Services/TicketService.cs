@@ -18,8 +18,9 @@ namespace AirlineReservationsSystem.Application.Services
         // إصدار تذكرة جديدة بناءً على الحجز
         public async Task<Ticket> IssueTicketAsync(int bookingId, string userId)
         {
+            // total tikets
             var booking = await _context.Bookings
-                .Include(b => b.FlightSeats)
+                
                 .FirstOrDefaultAsync(b => b.BookingId == bookingId && b.UserId == userId);
 
             if (booking == null)
@@ -31,7 +32,6 @@ namespace AirlineReservationsSystem.Application.Services
             {
                 BookingId = bookingId,
                 UserId = userId,
-                FlightId = booking.FlightSeats.FirstOrDefault()?.FlightId ?? 0,
                 Status = TicketStatus.Issued,  // تعيين الحالة كـ "Issued" باستخدام الـ Enum
                 IssueDate = DateTime.Now // تعيين تاريخ الإصدار
             };

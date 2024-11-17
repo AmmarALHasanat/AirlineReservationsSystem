@@ -4,6 +4,7 @@ using AirlineReservationsSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineReservationsSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117143439_fix_boooking_realtion")]
+    partial class fix_boooking_realtion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,6 +115,9 @@ namespace AirlineReservationsSystem.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
 
@@ -122,6 +128,8 @@ namespace AirlineReservationsSystem.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("FlightSeatId");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("FlightId");
 
@@ -1105,6 +1113,10 @@ namespace AirlineReservationsSystem.Migrations
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.FlightSeat", b =>
                 {
+                    b.HasOne("AirlineReservationsSystem.Domain.Entities.Booking", null)
+                        .WithMany("FlightSeats")
+                        .HasForeignKey("BookingId");
+
                     b.HasOne("AirlineReservationsSystem.Domain.Entities.Flight", "Flight")
                         .WithMany("FlightSeats")
                         .HasForeignKey("FlightId")
@@ -1250,6 +1262,8 @@ namespace AirlineReservationsSystem.Migrations
 
             modelBuilder.Entity("AirlineReservationsSystem.Domain.Entities.Booking", b =>
                 {
+                    b.Navigation("FlightSeats");
+
                     b.Navigation("Tickets");
                 });
 

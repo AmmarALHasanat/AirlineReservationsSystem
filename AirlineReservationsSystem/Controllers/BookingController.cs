@@ -2,6 +2,7 @@
 using AirlineReservationsSystem.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AirlineReservationsSystem.Controllers
@@ -16,12 +17,20 @@ namespace AirlineReservationsSystem.Controllers
             _bookingService = bookingService;
         }
 
-        // لعرض كل الحجوزات
         public async Task<IActionResult> Index()
         {
-            var bookings = await _bookingService.GetBookingByIdAsync(1);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            var bookings = await _bookingService.GetAllBookingsByUserIdAsync(userId);
             return View(bookings);
         }
+
+        // Details >> 
 
         // يمكنك إضافة دوال أخرى مثل Create و Edit و Delete حسب الحاجة
     }

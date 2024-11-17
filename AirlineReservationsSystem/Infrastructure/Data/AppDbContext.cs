@@ -52,6 +52,7 @@ namespace AirlineReservationsSystem.Infrastructure.Data
                 .WithOne(t => t.Booking)
                 .HasForeignKey(t => t.BookingId)
                 .OnDelete(DeleteBehavior.Restrict);
+
             // Flight Relations
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.Tickets)

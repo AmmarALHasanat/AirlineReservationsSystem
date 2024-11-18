@@ -1,14 +1,48 @@
 ﻿@model LoginViewModel
 
-
-
 @{
     ViewData["Title"] = "Login";
 }
 
-<div class="col-md-6 col-lg-4 card shadow-lg p-4 mt-5 mx-auto">
-    <h2 class="card-header text-center text-primary">
-        Login Form
+<style>
+    
+    body {
+        background: url('/image/Jet-setting-Across-the-Globe-3D-Flight-Background-with-World_4053083_wh860.jpg');
+        background-size: cover;
+        background-position: center; /
+        background-attachment: fixed; 
+        height: 100vh; 
+    }
+
+  
+    .login-card {
+        background-color: rgba(255, 255, 255, 0.8); 
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #007bff; 
+        color: white;
+    }
+
+
+    .btn-primary {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: white;
+    }
+
+</style>
+
+<div class="col-md-6 col-lg-4 card shadow-lg p-4 mt-5 mx-auto login-card">
+    <h2 class="card-header text-center">
+        <i class="bi bi-person-fill"></i> Login
     </h2>
     <form asp-action="Login" method="post" class="card-body">
         <div class="form-group mb-3">
@@ -28,15 +62,20 @@
             </label>
         </div>
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <a asp-action="Register" class="text-decoration-none">
-                Don't have an account?
+            <a asp-action="Register" class="text-decoration-none text-primary">
+                Don't have an account? <strong>Register</strong>
             </a>
-            <input type="submit" value="Login" class="btn btn-primary px-4" />
+            <input type="submit" value="Login" class="btn btn-primary px-4 py-2" />
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     </form>
-    <partial name="_GoogleSignPartial" />
+
+
+    <div class="text-center mt-3">
+        <partial name="_GoogleSignPartial" />
+    </div>
 </div>
+
 
 @section Scripts {
     @{

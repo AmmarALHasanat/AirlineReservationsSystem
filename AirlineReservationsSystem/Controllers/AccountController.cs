@@ -58,6 +58,7 @@ namespace AirlineReservationsSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
+
             if (!ModelState.IsValid) return View(registerViewModel);
 
             var user = new User
@@ -81,6 +82,7 @@ namespace AirlineReservationsSystem.Controllers
             }
 
             return View(registerViewModel);
+
         }
 
         public async Task<IActionResult> Logout()

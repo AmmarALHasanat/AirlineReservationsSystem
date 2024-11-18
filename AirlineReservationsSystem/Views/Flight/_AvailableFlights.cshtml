@@ -1,0 +1,22 @@
+﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.Flight>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Flight Number</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var flight in Model)
+        {
+            <tr>
+                <td>@flight.FlightNumber</td>
+                <td>@flight.DepartureTime</td>
+                <td>@flight.ArrivalTime</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,22 +1,38 @@
 ﻿@model IEnumerable<AirlineReservationsSystem.Domain.Entities.Flight>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Flight Number</th>
-            <th>Departure Time</th>
-            <th>Arrival Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var flight in Model)
-        {
-            <tr>
-                <td>@flight.FlightNumber</td>
-                <td>@flight.DepartureTime</td>
-                <td>@flight.ArrivalTime</td>
-            </tr>
-        }
-    </tbody>
-
-</table>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Available Flights</h2>
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Flight Number</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var flight in Model)
+                {
+                    <tr>
+                        <td>@flight.FlightNumber</td>
+                        <td>@flight.DepartureTime.ToString("dd/MM/yyyy hh:mm tt")</td>
+                        <td>@flight.ArrivalTime.ToString("dd/MM/yyyy hh:mm tt")</td>
+                        <td>
+                            <a href="/Flight/Details/@flight.FlightId" class="btn btn-sm btn-primary">View Details</a>
+                            <a href="/Flight/Book/@flight.FlightId" class="btn btn-sm btn-success">Book Now</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No available flights found.
+        </div>
+    }
+</div>

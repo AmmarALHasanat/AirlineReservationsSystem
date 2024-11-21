@@ -44,7 +44,8 @@ namespace AirlineReservationsSystem.Application.Services
                 if (!createResult.Succeeded)
                 {
                     return new RedirectToActionResult("Login", "Account", null);
-                }     
+                }
+                await userManager.AddToRoleAsync(user, "User");
             }
 
             await signInManager.SignInAsync(user, isPersistent: false);

@@ -1,45 +1,36 @@
 ﻿@model LoginViewModel
-
 @{
     ViewData["Title"] = "Login";
 }
-
 <style>
-    
     body {
         background: url('/image/Jet-setting-Across-the-Globe-3D-Flight-Background-with-World_4053083_wh860.jpg');
         background-size: cover;
-        background-position: center; /
-        background-attachment: fixed; 
-        height: 100vh; 
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
     }
 
-  
     .login-card {
-        background-color: rgba(255, 255, 255, 0.8); 
+        background-color: rgba(255, 255, 255, 0.85);
         border-radius: 10px;
         padding: 40px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #007bff; 
-        color: white;
-    }
-
-
-    .btn-primary {
-        background-color: #0069d9;
-        border-color: #0062cc;
+        max-width: 450px; /* محدودية عرض الكارت */
     }
 
     .card-header {
         background-color: #007bff;
         color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
+    .btn-primary {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
 </style>
-
 <div class="col-md-6 col-lg-4 card shadow-lg p-4 mt-5 mx-auto login-card">
     <h2 class="card-header text-center">
         <i class="bi bi-person-fill"></i> Login
@@ -47,12 +38,21 @@
     <form asp-action="Login" method="post" class="card-body">
         <div class="form-group mb-3">
             <label asp-for="Email" class="form-label text-dark">Email</label>
-            <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+            </div>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group mb-3">
             <label asp-for="Password" class="form-label text-dark">Password</label>
-            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="form-check mb-3">
@@ -60,6 +60,7 @@
             <label class="form-check-label">
                 Remember me
             </label>
+            <a href="#" class="float-end text-primary small">Forgot Password?</a>
         </div>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <a asp-action="Register" class="text-decoration-none text-primary">
@@ -69,16 +70,28 @@
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     </form>
-
-
     <div class="text-center mt-3">
         <partial name="_GoogleSignPartial" />
     </div>
 </div>
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function () {
+            $('.toggle-password').on('click', function () {
+                var passwordInput = $(this).siblings('input[type="password"]');
+                var icon = $(this).find('i');
+
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                }
+            });
+        });
+    </script>
 }

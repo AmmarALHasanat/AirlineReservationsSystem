@@ -49,7 +49,6 @@
             margin-top: 20px;
         }
 
-        /* تنسيق الجدول إذا كان هناك بيانات */
         table {
             margin-top: 30px;
         }
@@ -75,34 +74,29 @@
             <div class="alert alert-warning">@ViewBag.Message</div>
         }
 
-        <!-- نموذج البحث عن الرحلات -->
         <div class="card search-box">
             <form method="post" action="/Home/SearchFlights">
-                <!-- حقل From -->
+                <!-- From -->
                 <div class="mb-3">
                     <label for="from" class="form-label">From</label>
                     <input type="text" class="form-control" id="from" name="From" value="@Model.From" required>
                 </div>
 
-                <!-- حقل To -->
                 <div class="mb-3">
                     <label for="to" class="form-label">To</label>
                     <input type="text" class="form-control" id="to" name="To" value="@Model.To" required>
                 </div>
 
-                <!-- حقل Departure Date -->
                 <div class="mb-3">
                     <label for="departureDate" class="form-label">Departure Date</label>
                     <input type="date" class="form-control" id="departureDate" name="DepartureDate" value="@Model.DepartureDate?.ToString("yyyy-MM-dd")" required>
                 </div>
 
-                <!-- حقل Return Date (اختياري) -->
                 <div class="mb-3">
                     <label for="returnDate" class="form-label">Return Date (Optional)</label>
                     <input type="date" class="form-control" id="returnDate" name="ReturnDate" value="@Model.ReturnDate?.ToString("yyyy-MM-dd")">
                 </div>
 
-                <!-- نوع الرحلة -->
                 <div class="mb-3">
                     <label class="form-label">Trip Type</label><br>
                     <div class="form-check form-check-inline">
@@ -115,36 +109,46 @@
                     </div>
                 </div>
 
-                <!-- زر البحث -->
                 <button type="submit" class="btn btn-primary w-100">Search for a Flight</button>
             </form>
         </div>
 
-        <!-- عرض الرحلات المتاحة إذا كانت موجودة -->
-        @if (Model.AvailableFlights != null && Model.AvailableFlights.Any())
-        {
-            <h3 class="mt-4">Available Flights</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Flight Number</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var flight in Model.AvailableFlights)
-                    {
+        <td>
+            @if (Model.AvailableFlights != null && Model.AvailableFlights.Any())
+            {
+                <h3 class="mt-4">Available Flights</h3>
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td>@flight.FlightNumber</td>
-                            <td>@flight.DepartureTime.ToString("yyyy-MM-dd HH:mm")</td>
-                            <td>@flight.ArrivalTime.ToString("yyyy-MM-dd HH:mm")</td>
+                            <th>Flight Number</th>
+                            <th>Departure Time</th>
+                            <th>Arrival Time</th>
+                            <th>Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
+                    </thead>
+                    <tbody>
+                        @foreach (var flight in Model.AvailableFlights)
+                        {
+                            <tr>
+                                <td>@flight.FlightNumber</td>
+                                <td>@flight.DepartureTime.ToString("dd MMM yyyy, hh:mm tt")</td>
+                                <td>@flight.ArrivalTime.ToString("dd MMM yyyy, hh:mm tt")</td>
+                                <td>
+                                    <a href="/Flight/Details/@flight.FlightId" class="btn btn-sm btn-info">View Details</a>
+                                    <a href="/Flight/Book/@flight.FlightId" class="btn btn-sm btn-success">Book Now</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info text-center mt-4">
+                    No flights available for the selected criteria. Please try a different search.
+                </div>
+            }
+        </td>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -1,9 +1,7 @@
 ﻿@model RegisterViewModel
-
 @{
     ViewData["Title"] = "Register";
 }
-
 <style>
     body {
         background: url('/image/Jet-setting-Across-the-Globe-3D-Flight-Background-with-World_4053083_wh860.jpg');
@@ -13,10 +11,11 @@
     }
 
     .register-card {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.85);
         border-radius: 10px;
         padding: 40px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 450px;
     }
 
     .card-header {
@@ -30,63 +29,91 @@
     }
 
     .btn-primary {
-      background-color: #007bff;
-        color: white;
+        background-color: #0069d9;
+        border-color: #0062cc;
     }
 </style>
-
 <div class="col-md-6 col-lg-4 card shadow-lg p-4 mt-5 mx-auto register-card">
     <h2 class="card-header text-center">
-        <i class="bi bi-person-fill-add"></i>        Register
+        <i class="bi bi-person-fill-add"></i> Register
     </h2>
-    <form asp-action="Register" method="post" class="card-body fs-5">
-        <div class="form-group mb-2">
-            <label asp-for="FullName" class="form-label">Full Name</label>
-            <input asp-for="FullName" class="form-control" />
+    <form asp-action="Register" method="post" class="card-body">
+        <div class="form-group mb-3">
+            <label asp-for="FullName" class="form-label text-dark">Full Name</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+            </div>
             <span asp-validation-for="FullName" class="text-danger"></span>
         </div>
-
-        <div class="form-group mb-2">
-            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
-            <input asp-for="PhoneNumber" class="form-control" />
+        <div class="form-group mb-3">
+            <label asp-for="PhoneNumber" class="form-label text-dark">Phone Number</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Enter your phone number" />
+            </div>
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
-
-        <div class="form-group mb-2">
-            <label asp-for="Email" class="form-label">Email</label>
-            <input asp-for="Email" class="form-control" />
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="form-label text-dark">Email</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+            </div>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-
-        <div class="form-group mb-2">
-            <label asp-for="Password" class="form-label">Password</label>
-            <input asp-for="Password" type="password" class="form-control" />
+        <div class="form-group mb-3">
+            <label asp-for="Password" class="form-label text-dark">Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-
-        <div class="form-group mb-2">
-            <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
-            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        <div class="form-group mb-3">
+            <label asp-for="ConfirmPassword" class="form-label text-dark">Confirm Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" />
+                <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
-
-        <div class="row">
-            <div class="col-8">
-                <a asp-action="Login">Do you have an account?</a>
-            </div>
-            <div class="col-4 d-flex justify-content-end">
-                <input type="submit" value="Register" class="btn-primary btn-lg" />
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a asp-action="Login" class="text-decoration-none text-primary">
+                Already have an account? <strong>Login</strong>
+            </a>
+            <input type="submit" value="Register" class="btn btn-primary px-4 py-2" />
         </div>
-
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     </form>
-
-    <partial name="_GoogleSignPartial" />
+    <div class="text-center mt-3">
+        <partial name="_GoogleSignPartial" />
+    </div>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function() {
+            $('.toggle-password').on('click', function() {
+                var passwordInput = $(this).siblings('input[type="password"]');
+                var icon = $(this).find('i');
+
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                }
+            });
+        });
+    </script>
 }

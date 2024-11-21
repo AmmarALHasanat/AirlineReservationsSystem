@@ -1,18 +1,26 @@
-﻿@model AirlineReservationsSystem.Domain.Entities.Payment
+﻿@using AirlineReservationsSystem.Domain.Enums
+@model AirlineReservationsSystem.Domain.Entities.Payment
 
 <h2>Payment Details</h2>
 
-<div>
+<div class="mb-3">
     <strong>Payment ID:</strong> @Model.PaymentId
 </div>
-<div>
-    <strong>Amount:</strong> @Model.Amount
-</div>
-<div>
-    <strong>Status:</strong> @Model.Status
+
+<div class="mb-3">
+    <strong>Amount:</strong> @String.Format("{0:C}", Model.Amount)
 </div>
 
-<form asp-action="CancelPayment" method="post">
+<div class="mb-3">
+    <strong>Status:</strong>
+    <span class="badge @(Model.Status == PaymentStatus.Confirmed ? "bg-success" :
+                        (Model.Status == PaymentStatus.Pending ? "bg-warning" :
+                        (Model.Status == PaymentStatus.Refund ? "bg-info" : "bg-danger")))">
+        @Model.Status
+    </span>
+</div>
+
+<form asp-action="CancelPayment" method="post" onsubmit="return confirm('Are you sure you want to cancel this payment?');">
     <input type="hidden" name="paymentId" value="@Model.PaymentId" />
     <button type="submit" class="btn btn-danger">Cancel Payment</button>
 </form>

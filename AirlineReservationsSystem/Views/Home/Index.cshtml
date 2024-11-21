@@ -1,13 +1,28 @@
 ﻿@using AirlineReservationsSystem.Domain.Dictionaries
 @{
-    ViewData["Title"] = "Search for Flights";
-    ViewData["AirportCodes"] = AirportCodes.Codes;
+    ViewData["Title"] = "Home Page";
 }
 
+<style>
+    body {
+        background: url('/image/Jet-setting-Across-the-Globe-3D-Flight-Background-with-World_4053083_wh860.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
+    }
+    .home-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 5vh;
+    }
+</style>
 
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Search for Your Flight</h1>
-    <div class="card p-4">
+    <div class="home-card">
+        <h1 class="text-center mb-4">Search for Your Flight</h1>
         <form action="/search-flights" method="GET">
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -59,31 +74,17 @@
 
             <button type="submit" class="btn btn-primary w-100">Search for a Flight</button>
         </form>
-
-        <div>
-            <!-- Comment: Your action to load available flights -->
-            make new view model for search data >>>
-            load partial view for available flight after search using ajax and jquery
-            >>> partial view List of flight
-            flight have >>
-            string FlightNumber
-            DateTime DepartureTime
-            DateTime ArrivalTime
-        </div>
-
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Ensure the departure date cannot be before the current date
         var currentDate = new Date();
         currentDate.setDate(currentDate.getDate() + 1);
         var currentDateString = currentDate.toISOString().split('T')[0];
         $('#departureDate').attr('min', currentDateString);
 
-        // When the departure date is changed, adjust the minimum return date
         $('#departureDate').on('change', function () {
             var departureDate = $(this).val();
             if (departureDate) {

@@ -19,13 +19,13 @@ namespace AirlineReservationsSystem.Controllers
         {
             var viewModel = new FlightSearchViewModel
             {
-                AvailableFlights = new List<Flight>() // Initialize with an empty list
+              ///  AvailableFlights = new List<Flight>() // Initialize with an empty list
             };
             return View(viewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchFlights(string from, string to, DateTime? departureDate, DateTime? returnDate, string tripType)
+        public async Task<IActionResult> SearchFlights(string from, string to, DateTime departureDate, DateTime? returnDate, TripType tripType)
         {
             var availableFlights = await _flightService.GetAvailableFlightsAsync(from, to, departureDate, returnDate, tripType);
 

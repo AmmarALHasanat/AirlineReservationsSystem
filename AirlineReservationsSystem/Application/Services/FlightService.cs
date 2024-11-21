@@ -2,6 +2,7 @@
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Domain.Enums;
 using AirlineReservationsSystem.Infrastructure.Data;
+using AirlineReservationsSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
 
@@ -16,14 +17,14 @@ namespace AirlineReservationsSystem.Application.Services
             _context = context;
         }
 
-        public async Task<List<Flight>> GetAvailableFlightsAsync(string from, string to, DateTime? departureDate, DateTime? returnDate, string tripType)
+        public async Task<List<Flight>> GetAvailableFlightsAsync(string from, string to, DateTime departureDate, DateTime? returnDate, TripType tripType)
         {
             var query = _context.Flights.AsQueryable();
 
             if (!string.IsNullOrEmpty(from) && !string.IsNullOrEmpty(to))
             {
                 var routeId = _context.Routes.FirstOrDefault(r => r.Origin == from && r.Destination == to)?.TravelRouteId;
-                if(tripType == "roundTrip")
+                if(tripType == TripType.RoundTrip)
                 {
                     var routeId2 = _context.Routes.FirstOrDefault(r => r.Origin == to && r.Destination == from)?.TravelRouteId;
                 }
@@ -37,14 +38,9 @@ namespace AirlineReservationsSystem.Application.Services
                     return new List<Flight>();
                 }
             }
-
-
-            if (departureDate.HasValue)
-            {
-                query = query.Where(f => f.DepartureTime.Date == departureDate.Value.Date);
-            }
-
-            if (tripType == "roundTrip" && returnDate.HasValue)
+            query = query.Where(f => f.DepartureTime.Date == departureDate);
+   
+            if (tripType ==TripType.RoundTrip && returnDate.HasValue)
             {
                 query = query.Where(f => f.ArrivalTime.Date == returnDate.Value.Date);
             }
@@ -91,11 +87,8 @@ namespace AirlineReservationsSystem.Application.Services
 
 
 
-        // create or update fligth by admin roule only 
         // search for AirportNames and add key + city >> file in Domain/Dictionaries/AirportNames.cs
         // or company name
-
-
 
         public async Task<Flight?> GetFlightByIdAsync(int flightId)
         {

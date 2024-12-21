@@ -1,7 +1,6 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Infrastructure.Data;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservationsSystem.Application.Services

@@ -1,18 +1,7 @@
 ﻿using AirlineReservationsSystem.Application.Interfaces;
 using AirlineReservationsSystem.Domain.Entities;
 using AirlineReservationsSystem.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
-
-using Microsoft.AspNetCore.Authentication;
-
-//using Microsoft.AspNetCore.Authentication;
-//using Microsoft.AspNetCore.Authentication.Cookies;
-//using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using AirlineReservationsSystem.Application.Services;
 
 namespace AirlineReservationsSystem.Controllers
 {
@@ -58,6 +47,7 @@ namespace AirlineReservationsSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
+
             if (!ModelState.IsValid) return View(registerViewModel);
 
             var user = new User
@@ -69,7 +59,7 @@ namespace AirlineReservationsSystem.Controllers
             };
 
             var result = await userService.RegisterAsync(user, registerViewModel.Password!);
-
+            
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
@@ -81,6 +71,7 @@ namespace AirlineReservationsSystem.Controllers
             }
 
             return View(registerViewModel);
+
         }
 
         public async Task<IActionResult> Logout()

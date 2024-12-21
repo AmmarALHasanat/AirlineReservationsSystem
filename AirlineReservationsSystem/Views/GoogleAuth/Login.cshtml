@@ -1,9 +1,13 @@
-﻿@@{
+﻿@{
     ViewData["Title"] = "Login with Google";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="text-center">@ViewData["Title"]</h2>
 
-<a href="@Url.Action("Login", "GoogleAuth")" class="btn btn-danger">
-    Login with Google
-</a>
+<p class="text-center">Log in to access your personalized settings and preferences.</p>
+
+<div class="text-center">
+    <a href="@Url.Action("Login", "GoogleAuth")" class="btn btn-danger">
+        <i class="fab fa-google"></i> Login with Google
+    </a>
+</div>

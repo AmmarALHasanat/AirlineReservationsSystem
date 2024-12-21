@@ -5,6 +5,7 @@ using AirlineReservationsSystem.Infrastructure.Data;
 using AirlineReservationsSystem.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,13 @@ var connectionString = builder.Configuration.GetConnectionString("defaultConnect
 //Infrastructure
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>{
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+    });
+
+
+
 builder.Services.AddDbContext<AppDbContext>(
         options => options.UseSqlServer(connectionString)
     );
@@ -53,6 +60,7 @@ builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<ITravelRouteService, TravelRouteService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
 
 var app = builder.Build();
 

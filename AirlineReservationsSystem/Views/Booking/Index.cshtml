@@ -1,19 +1,58 @@
-﻿@model List<AirlineReservationsSystem.Domain.Entities.Booking>
+﻿@using AirlineReservationsSystem.Domain.Enums
+@model List<AirlineReservationsSystem.Domain.Entities.Booking>
 
-<table>
-    <tr>
-        <th>Booking ID</th>
-        <th>Flight ID</th>
-        <th>Other Data</th>
-    </tr>
-    @foreach (var booking in Model)
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Your Bookings</h2>
+    @if (Model != null && Model.Any())
     {
-        <tr>
-            <td>@booking.BookingId</td>
-            <td>@booking.BookingDate</td>
-            <td>@booking.Tickets.Count</td> // total number of Tickets
-            // status booking
-        </tr>
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Booking Date</th>
+                    <th>Total Tickets</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model)
+                {
+                    <tr>
+                        <td>@booking.BookingId</td>
+                        <td>@booking.BookingDate.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.Tickets?.Count ?? 0</td>
+                        <td>
+                            @if (booking.Status == BookingStatus.Confirmed)
+                            {
+                                <span class="badge bg-success">Confirmed</span>
+                            }
+                            else if (booking.Status == BookingStatus.Pending)
+                            {
+                                <span class="badge bg-warning">Pending</span>
+                            }
+                            else if (booking.Status == BookingStatus.Canceled)
+                            {
+                                <span class="badge bg-danger">Canceled</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Unknown</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Booking/Details/@booking.BookingId" class="btn btn-sm btn-primary">View Details</a>
+                            <a href="/Booking/Cancel/@booking.BookingId" class="btn btn-sm btn-danger">Cancel</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
-</table>
-
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No bookings found.
+        </div>
+    }
+</div>

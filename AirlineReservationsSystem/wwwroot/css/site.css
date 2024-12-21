@@ -16,7 +16,12 @@ html {
   position: relative;
   min-height: 100%;
 }
+<head >
+
+<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" / >
+
+</head >
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }

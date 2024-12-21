@@ -5,6 +5,7 @@ using AirlineReservationsSystem.Infrastructure.Data;
 using AirlineReservationsSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AirlineReservationsSystem.Application.Services
 {
@@ -17,17 +18,13 @@ namespace AirlineReservationsSystem.Application.Services
             _context = context;
         }
 
-        public async Task<List<Flight>> GetAvailableFlightsAsync(string from, string to, DateTime departureDate, DateTime? returnDate, TripType tripType)
+        public async Task<List<Flight>> GetAvailableFlightsAsync(string from, string to, DateTime departureDate, DateTime? returnDate, TripType? tripType)
         {
             var query = _context.Flights.AsQueryable();
 
             if (!string.IsNullOrEmpty(from) && !string.IsNullOrEmpty(to))
             {
                 var routeId = _context.Routes.FirstOrDefault(r => r.Origin == from && r.Destination == to)?.TravelRouteId;
-                if(tripType == TripType.RoundTrip)
-                {
-                    var routeId2 = _context.Routes.FirstOrDefault(r => r.Origin == to && r.Destination == from)?.TravelRouteId;
-                }
 
                 if (routeId.HasValue)
                 {
@@ -38,12 +35,8 @@ namespace AirlineReservationsSystem.Application.Services
                     return new List<Flight>();
                 }
             }
-            query = query.Where(f => f.DepartureTime.Date == departureDate);
-   
-            if (tripType ==TripType.RoundTrip && returnDate.HasValue)
-            {
-                query = query.Where(f => f.ArrivalTime.Date == returnDate.Value.Date);
-            }
+            query = query.Where(f => EF.Functions.DateDiffDay(f.DepartureTime, departureDate) == 0);
+
 
             return await query.ToListAsync();
         }

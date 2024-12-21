@@ -1,95 +1,163 @@
 ﻿@using AirlineReservationsSystem.Domain.Dictionaries
+@model FlightSearchViewModel
+
 @{
-    ViewData["Title"] = "Search for Flights";
-    ViewData["AirportCodes"] = AirportCodes.Codes;
+    ViewData["Title"] = "Home Page";
 }
 
+<style>
+    body {
+        background: url('/image/Jet-setting-Across-the-Globe-3D-Flight-Background-with-World_4053083_wh860.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
+    }
+
+    .home-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 5vh;
+    }
+</style>
+
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Search for Your Flight</h1>
-    <div class="card p-4">
-        <form action="/search-flights" method="GET">
+    <div class="home-card">
+        <h1 class="text-center mb-4">Search for Your Flight</h1>
+        <form id="flightSearchForm" asp-action="SearchFlights" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="from" class="form-label">From</label>
-                    <select id="from" class="form-control">
+                    <select id="From" asp-for="From" class="form-control">
                         <option value="">Select a Route</option>
                         @foreach (var Code in AirportCodes.Codes)
                         {
                             <option value="@Code.Key">(@Code.Key) @Code.Value.City</option>
                         }
                     </select>
+                    <span asp-validation-for="From" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label for="to" class="form-label">To</label>
-                    <select id="to" class="form-control">
+                    <select id="To" asp-for="To" class="form-control">
                         <option value="">Select a Route</option>
                         @foreach (var Code in AirportCodes.Codes)
                         {
                             <option value="@Code.Key">(@Code.Key) @Code.Value.City</option>
                         }
                     </select>
+                    <span asp-validation-for="To" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="departureDate" class="form-label">Departure Date</label>
-                    <input type="date" class="form-control" id="departureDate" name="ArrivalTime" required>
-                </div>
+                    <input type="date" class="form-control" id="departureDate" asp-for="DepartureDate">
+                    <span asp-validation-for="DepartureDate" class="text-danger"></span>
 
-                <div class="col-md-6 mb-3">
-                    <label for="returnDate" class="form-label">Return Date (Optional)</label>
-                    <input type="date" class="form-control" id="returnDate" name="returnDate">
                 </div>
+                <!--
+                <div class="col-md-6 mb-3 return-date-container d-none">
+                    <label for="returnDate" class="form-label">Return Date</label>
+                    <input type="date" class="form-control" asp-for="ReturnDate">
+                    <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                </div>
+                -->
+
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Trip Type</label><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tripType" id="oneWay" value="oneWay" checked>
+                    <input class="form-check-input" type="radio" asp-for="TripType" id="oneWay" value="OneWay" />
                     <label class="form-check-label" for="oneWay">One Way</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tripType" id="roundTrip" value="roundTrip">
+                    <input class="form-check-input" type="radio" asp-for="TripType" id="roundTrip" value="RoundTrip" />
                     <label class="form-check-label" for="roundTrip">Round Trip</label>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Search for a Flight</button> 
+            <button type="submit" class="btn btn-primary w-100">Search</button>
         </form>
-        <div>
-            make new view model for seach data >>> 
-            load partal view for avalble fligth after seach using ajax and jyqry
-            >>>  partal view List of fligth 
-            fligth have >>
-            string FlightNumber
-            DateTime DepartureTime 
-            DateTime ArrivalTime
-        </div>
+    </div>
 
+    <div id="availableFlightsSection" class="mt-5">
+        <!-- Partial view content will be dynamically loaded here -->
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Initialize minimum dates
         var currentDate = new Date();
         currentDate.setDate(currentDate.getDate() + 1);
         var currentDateString = currentDate.toISOString().split('T')[0];
         $('#departureDate').attr('min', currentDateString);
+
         $('#departureDate').on('change', function () {
             var departureDate = $(this).val();
             if (departureDate) {
                 var returnDate = new Date(departureDate);
                 returnDate.setDate(returnDate.getDate() + 1);
-                var returnDateString = returnDate.toISOString().split('T')[0];
-                $('#returnDate').attr('min', returnDateString);
-                if ($('#returnDate').val() && $('#returnDate').val() < returnDateString) {
-                    $('#returnDate').val(returnDateString);
-                }
+                $('#returnDate').attr('min', returnDate.toISOString().split('T')[0]);
             }
         });
+
+        // Toggle Return Date
+        // $('input[name="TripType"]').on('change', function () {
+        //     const tripType = $('input[name="TripType"]:checked').val();
+        //     if (tripType === "RoundTrip") {
+        //         $('.return-date-container').removeClass('d-none');
+        //         $('#returnDate').attr('required', true);
+        //     } else {
+        //         $('.return-date-container').addClass('d-none');
+        //         $('#returnDate').removeAttr('required').val('');
+        //     }
+        // });
+
+        // Handle Form Submission
+        $('#flightSearchForm').submit(function (event) {
+            event.preventDefault();
+
+            const formData = {
+                // use Model
+                From: $('#From').val(),
+                To: $('#To').val(),
+                DepartureDate: $('#departureDate').val(),
+                ReturnDate: $('#returnDate').val(),
+                TripType: $('input[name="TripType"]:checked').val()
+            };
+            $('span.text-danger').text('');
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    $('#availableFlightsSection').html(response);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        const errors = JSON.parse(xhr.responseText);
+                        for (const field in errors) {
+                            $(`span[data-valmsg-for="${field}"]`).text(errors[field]);
+                        }
+                    } else {
+                        const errorContainer = $('#errorMessage');
+                        errorContainer.removeClass('d-none');
+                        errorContainer.html(' An unexpected error occurred. Please try again later.');
+                    }
+                }
+            });
+        });
+
     });
+   
 </script>
-
-
